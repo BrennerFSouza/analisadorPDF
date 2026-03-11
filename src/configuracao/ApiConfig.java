@@ -2,6 +2,7 @@ package configuracao;
 
 public class ApiConfig {
     private static final String NOME_API_KEY = "chatpdf.api.key";
+    private static final String URL_BASE = "https://api.chatpdf.com/v1";
 
 
     public static String obterApiKey(){
