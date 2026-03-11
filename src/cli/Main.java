@@ -1,4 +1,9 @@
-package cli;
+import configuracao.ApiConfig;
 
-public class Main {
+void main() {
+
+    String apiKey = ApiConfig.obterApiKey();
+    System.out.println(apiKey);
+
+
 }
