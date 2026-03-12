@@ -19,12 +19,11 @@ public class ChatPdfService {
 
     private final String apiKey;
 
-
     //CONSTRUCTOR
-    public ChatPdfService(HttpClient client, Gson gson, String apiKey) {
-        this.client = client;
-        this.gson = gson;
-        this.apiKey = apiKey;
+    public ChatPdfService() {  // ← Construtor VAZIO (sem parâmetros)
+        this.client = HttpClient.newHttpClient();
+        this.gson = new Gson();
+        this.apiKey = ApiConfig.obterApiKey();
     }
 
     //METODS
