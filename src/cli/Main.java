@@ -1,3 +1,4 @@
+import configuracao.ApiConfig;
 import modelo.ChatRequest;
 import modelo.ChatResponse;
 import modelo.Message;
@@ -10,11 +11,13 @@ void main() {
     try{
         ChatPdfService service = new ChatPdfService();
 
+        String sourceId = ApiConfig.obterSourceId();
+
 
         Message pergunta = new Message("user", "Resuma este PDF em 3 frases");
 
         ChatRequest pedido = new ChatRequest(
-                "src_XNuV6I2sBfjWd2W9b3Ju0",
+                sourceId,
                 new Message[]{pergunta}
         );
 

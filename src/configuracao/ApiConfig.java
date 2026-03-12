@@ -2,6 +2,7 @@ package configuracao;
 
 public class ApiConfig {
     private static final String NOME_API_KEY = "chatpdf.api.key";
+    private static final String NOME_SOURCE_ID = "chatpdf.source.id";
     public static final String URL_BASE = "https://api.chatpdf.com/v1";
 
 
@@ -14,4 +15,14 @@ public class ApiConfig {
 
         return apiKey;
     }
+
+    public static String obterSourceId(){
+        String sourceId = System.getProperty(NOME_SOURCE_ID);
+        if (sourceId == null || sourceId.isEmpty()) {
+            System.err.println("❌ ERRO: Execute com -D" + NOME_SOURCE_ID + "=seu-sourceId");
+            System.exit(1);
+        }
+        return sourceId;
+    }
+
 }
