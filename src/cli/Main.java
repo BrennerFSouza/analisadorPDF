@@ -1,10 +1,7 @@
-import configuracao.ApiConfig;
 import modelo.ChatRequest;
 import modelo.ChatResponse;
 import modelo.Message;
 import servico.ChatPdfService;
-
-import javax.xml.transform.Source;
 
 void main() {
 
@@ -24,9 +21,9 @@ void main() {
         System.out.print("⏳ Enviando pergunta para ChatPDF");
         ChatResponse resposta = service.enviarPergunta(pedido);
 
-        if (resposta != null && resposta.getText() != null){
+        if (resposta != null && resposta.getContent() != null){
             System.out.println("\n✅ RESPOSTA DO CHATPDF:");
-            System.out.println("📄 " + resposta.getText());
+            System.out.println("📄 " + resposta.getContent());
         } else {
             System.out.println("\n❌ Erro na resposta da API");
         }

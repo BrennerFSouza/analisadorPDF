@@ -1,7 +1,7 @@
 package modelo;
 
 public class ChatResponse {
-    private String text;
+    private String content;
     private  String sourceId;
     private String sessionId;
 
@@ -9,15 +9,15 @@ public class ChatResponse {
     public ChatResponse() {}
 
     public ChatResponse(String text, String sourceId, String sessionId) {
-        this.text = text;
+        this.content = text;
         this.sourceId = sourceId;
         this.sessionId = sessionId;
     }
 
     //METODS
 
-    public String getText() {
-        return text;
+    public String getContent() {
+        return content;
     }
 
     public String getSourceId() {
@@ -28,8 +28,8 @@ public class ChatResponse {
         return sessionId;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public void setSourceId(String sourceId) {

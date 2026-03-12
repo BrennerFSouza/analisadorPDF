@@ -41,6 +41,7 @@ public class ChatPdfService {
             HttpResponse<String> response = client.send(httpRequest,
                     HttpResponse.BodyHandlers.ofString());
 
+
             if (response.statusCode() != 200){
                 System.err.println("❌ API ERRO " + response.statusCode());
                 return null;
