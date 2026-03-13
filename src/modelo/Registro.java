@@ -6,6 +6,9 @@ public class Registro {
     private String content;
 
     public Registro(long id, String title, String content) {
+        if (title.length() < 10){
+            throw new RuntimeException("Titulo deve ter mais que 10 caracteres: " + title);
+        }
         this.id = id;
         this.title = title;
         this.content = content;
@@ -20,6 +23,9 @@ public class Registro {
     }
 
     public String getTitle() {
+        if (title.length() < 10){
+            throw new RuntimeException("Titulo deve ter mais que 10 caracteres: " + title);
+        }
         return title;
     }
 
@@ -33,5 +39,14 @@ public class Registro {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    @Override
+    public String toString() {
+        return "Registro{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                '}';
     }
 }
