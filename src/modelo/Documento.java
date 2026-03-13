@@ -1,19 +1,20 @@
 package modelo;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Date;
 
 public class Documento {
     private String sourceId;
     private String documentName;
-    private LocalDateTime creationDate;
-    private LocalDateTime alterationDate;
+    private Date creationDate;
+    private Date alterationDate;
     private boolean haveAlteration;
     private Registro[] registros;
 
     public Documento(String documentName) {
         this.documentName = documentName;
-        this.creationDate = LocalDateTime.now();
+        this.creationDate = new Date();
     }
 
     public String getSourceId() {
@@ -33,19 +34,19 @@ public class Documento {
     }
 
 
-    public LocalDateTime getCreationDate() {
+    public Date getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(LocalDateTime creationDate) {
+    public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
     }
 
-    public void setAlterationDate(LocalDateTime alterationDate) {
+    public void setAlterationDate(Date alterationDate) {
         this.alterationDate = alterationDate;
     }
 
-    public LocalDateTime getAlterationDate() {
+    public Date getAlterationDate() {
         return alterationDate;
     }
 
@@ -63,5 +64,17 @@ public class Documento {
 
     public void setRegistros(Registro[] registros) {
         this.registros = registros;
+    }
+
+    @Override
+    public String toString() {
+        return "Documento{" +
+                "sourceId='" + sourceId + '\'' +
+                ", documentName='" + documentName + '\'' +
+                ", creationDate=" + creationDate +
+                ", alterationDate=" + alterationDate +
+                ", haveAlteration=" + haveAlteration +
+                ", registros=" + Arrays.toString(registros) +
+                '}';
     }
 }
