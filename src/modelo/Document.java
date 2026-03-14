@@ -1,18 +1,17 @@
 package modelo;
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Date;
 
-public class Documento {
+public class Document {
     private String sourceId;
     private String documentName;
     private Date creationDate;
     private Date alterationDate;
     private boolean haveAlteration;
-    private Registro[] registros;
+    private Orientation[] orientations;
 
-    public Documento(String documentName) {
+    public Document(String documentName) {
         this.documentName = documentName;
         this.creationDate = new Date();
     }
@@ -58,23 +57,23 @@ public class Documento {
         this.haveAlteration = haveAlteration;
     }
 
-    public Registro[] getRegistros() {
-        return registros;
+    public Orientation[] getOrientations() {
+        return orientations;
     }
 
-    public void setRegistros(Registro[] registros) {
-        this.registros = registros;
+    public void setOrientations(Orientation[] orientations) {
+        this.orientations = orientations;
     }
 
     @Override
     public String toString() {
-        return "Documento{" +
+        return "Document{" +
                 "sourceId='" + sourceId + '\'' +
                 ", documentName='" + documentName + '\'' +
                 ", creationDate=" + creationDate +
                 ", alterationDate=" + alterationDate +
                 ", haveAlteration=" + haveAlteration +
-                ", registros=" + Arrays.toString(registros) +
+                ", registros=" + Arrays.toString(orientations) +
                 '}';
     }
 }

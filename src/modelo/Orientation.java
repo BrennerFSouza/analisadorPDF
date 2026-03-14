@@ -1,11 +1,11 @@
 package modelo;
 
-public class Registro {
+public class Orientation {
     private long id;
     private String title;
     private String content;
 
-    public Registro(long id, String title, String content) {
+    public Orientation(long id, String title, String content) {
         if (title.length() < 10){
             throw new RuntimeException("Titulo deve ter mais que 10 caracteres: " + title);
         }
@@ -43,7 +43,7 @@ public class Registro {
 
     @Override
     public String toString() {
-        return "Registro{" +
+        return "Orientation{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +

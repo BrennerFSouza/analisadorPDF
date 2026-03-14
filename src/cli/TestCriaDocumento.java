@@ -1,7 +1,7 @@
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import modelo.Documento;
-import modelo.Registro;
+import modelo.Document;
+import modelo.Orientation;
 
 void main() {
 
@@ -10,14 +10,14 @@ void main() {
     String title = "teste de titulo";
     String content = "teste de conteudo";
 
-    var registro1 = new Registro(id, title, content);
+    var registro1 = new Orientation(id, title, content);
 
     System.out.println(registro1);
 
     //TESTE CRIAÇÃO DOCUMENTO
     String nomeDocumento = "Nome teste";
 
-    var documento1 = new Documento(nomeDocumento);
+    var documento1 = new Document(nomeDocumento);
     System.out.println(documento1);
 
     Gson gson = new GsonBuilder()
