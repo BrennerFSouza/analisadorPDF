@@ -23,9 +23,6 @@ public class Orientation {
     }
 
     public String getTitle() {
-        if (title.length() < 10){
-            throw new RuntimeException("Titulo deve ter mais que 10 caracteres: " + title);
-        }
         return title;
     }
 

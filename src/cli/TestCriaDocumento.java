@@ -4,8 +4,10 @@ import modelo.Document;
 import modelo.Orientation;
 import servico.DocumentService;
 
-void main() {
+import static java.lang.IO.readln;
 
+void main()  {
+/*
     //TESTE CRIAÇÃO REGISTRO
 
 
@@ -34,20 +36,92 @@ void main() {
 
     //TESTE CARREGAR DOCUMENTO
 
-    Document documento2 = service.readDocument(nomeDocumento);
+    Document documento2 = service.readDocument(nomeDocumento + ".json");
 
     System.out.println(documento2);
     System.out.println(documento2.getCreationDate());
-
+*/
     //LISTAR DOCUMENTOS
-
+    var service = new DocumentService();
     String[] listaDocumentos = service.listDocuments();
-
+    System.out.println("Lista de documentos");
     if (listaDocumentos != null){
-        for (String listaDocumento : listaDocumentos) {
-            System.out.println(listaDocumento);
+        for (int i = 0; i < listaDocumentos.length; i++) {
+            System.out.println(i+1 +" - "+listaDocumentos[i]);
         }
     }
+
+    String seletor = readln("Selecione o documento");
+
+    int seletorNumerico = Integer.parseInt(seletor);
+
+    if (seletorNumerico == 0){
+        String nomeNovoDocumento = readln("Digite o nome para o novo Documento");
+        service.createDocument(nomeNovoDocumento);
+    } else if (seletorNumerico > 0 && seletorNumerico <= listaDocumentos.length) {
+
+        var document = service.readDocument(listaDocumentos[seletorNumerico - 1]);
+        System.out.println(document);
+
+
+    }else {
+        System.out.println("Item não encontrado");
+    }
+
+    System.out.println("Documento selecionado:");
+    System.out.println(service.toString());
+
+    seletorNumerico = -1;
+    while (seletorNumerico != 0){
+        System.out.println("0 - para sair do documento");
+        System.out.println("1 - Listar Orientações");
+        System.out.println("2 - Criar nova orientação");
+
+        seletorNumerico = Integer.parseInt(readln("Selecione uma opção"));
+
+
+
+        switch (seletorNumerico){
+            case 0:
+                System.out.println("Saindo do documento...");
+                break;
+
+            case 1:
+                List<Orientation> listaOrientations = service.listOrientations();
+
+                if (!listaOrientations.isEmpty()){
+                for (int i = 0; i < listaOrientations.size(); i++) {
+                    System.out.println(listaOrientations.get(i));
+                }
+                }else {
+                    System.out.println("Sem orientações");
+                }
+
+                break;
+
+            case 2:
+                String nome = readln("Digite o titulo da orientação:\n");
+                String descricao = readln("Digite a descrição:\n");
+
+                if (service.includeOrientation(nome, descricao)){
+                    System.out.println("Documento atualizado...");
+                }else {
+                    System.out.println("Erro ao salvar");
+                }
+
+
+                break;
+
+            default:
+                System.out.println("Erro no seletor");
+                break;
+
+        }
+
+    }
+
+
+
 
 
 

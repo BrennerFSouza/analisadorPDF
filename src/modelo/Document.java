@@ -1,7 +1,6 @@
 package modelo;
 
-import java.util.Arrays;
-import java.util.Date;
+import java.util.*;
 
 public class Document {
     private String sourceId;
@@ -9,7 +8,8 @@ public class Document {
     private Date creationDate;
     private Date alterationDate;
     private boolean haveAlteration;
-    private Orientation[] orientations;
+    private List<Orientation> orientations;
+
 
     public Document(String documentName) {
         this.documentName = documentName;
@@ -57,11 +57,14 @@ public class Document {
         this.haveAlteration = haveAlteration;
     }
 
-    public Orientation[] getOrientations() {
+    public List<Orientation> getOrientations() {
+        if(this.orientations == null){
+            return Collections.emptyList();
+        }
         return orientations;
     }
 
-    public void setOrientations(Orientation[] orientations) {
+    public void setOrientations(List<Orientation> orientations) {
         this.orientations = orientations;
     }
 
@@ -73,7 +76,7 @@ public class Document {
                 ", creationDate=" + creationDate +
                 ", alterationDate=" + alterationDate +
                 ", haveAlteration=" + haveAlteration +
-                ", registros=" + Arrays.toString(orientations) +
+                ", orientations=" + orientations +
                 '}';
     }
 }
