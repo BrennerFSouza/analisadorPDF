@@ -18,7 +18,7 @@ void main() {
     System.out.println(registro1);
 
     //TESTE CRIAÇÃO DOCUMENTO
-    String nomeDocumento = "Nome teste";
+    String nomeDocumento = "Nome teste 2";
 
     var documento1 = new Document(nomeDocumento);
 
@@ -39,6 +39,15 @@ void main() {
     System.out.println(documento2);
     System.out.println(documento2.getCreationDate());
 
+    //LISTAR DOCUMENTOS
+
+    String[] listaDocumentos = service.listDocuments();
+
+    if (listaDocumentos != null){
+        for (String listaDocumento : listaDocumentos) {
+            System.out.println(listaDocumento);
+        }
+    }
 
 
 

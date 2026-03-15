@@ -5,10 +5,12 @@ import com.google.gson.GsonBuilder;
 import modelo.Document;
 
 import javax.print.Doc;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 
 public class DocumentService {
     private String nome;
@@ -21,9 +23,14 @@ public class DocumentService {
     public DocumentService() {
     }
 
+    public String[] listDocuments(){
+      var path = new File(".");
+
+      return path.list(((dir, name) -> name.endsWith(".json")));
+
+    }
+
     public boolean createDocument(String nome, Document document) {
-
-
         String json = gson.toJson(document);
 
         try (FileWriter writer = new FileWriter(nome + ".json")) {
@@ -47,4 +54,7 @@ public class DocumentService {
         }
 
     }
+
+
+
 }
