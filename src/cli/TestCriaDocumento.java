@@ -22,13 +22,28 @@ void main() {
 
     var documento1 = new Document(nomeDocumento);
 
-    var service = new DocumentService(nomeDocumento, documento1);
+    System.out.println(documento1.getCreationDate());
 
-    if(service.createDocument()){
+    var service = new DocumentService();
+
+    if(service.createDocument(nomeDocumento, documento1)){
         System.out.println("Salvado com sucesso");
     }else{
         System.out.println("Erro ao salvar");
     }
+
+    //TESTE CARREGAR DOCUMENTO
+
+    Document documento2 = service.readDocument(nomeDocumento);
+
+    System.out.println(documento2);
+    System.out.println(documento2.getCreationDate());
+
+
+
+
+
+
 
 
 
