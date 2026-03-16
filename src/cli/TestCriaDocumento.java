@@ -76,6 +76,8 @@ void main()  {
         System.out.println("0 - para sair do documento");
         System.out.println("1 - Listar Orientações");
         System.out.println("2 - Criar nova orientação");
+        System.out.println("3 - Alterar orientação");
+        System.out.println("4 - Deletar orientação");
 
         seletorNumerico = Integer.parseInt(readln("Selecione uma opção"));
 
@@ -106,29 +108,23 @@ void main()  {
                 if (service.includeOrientation(nome, descricao)){
                     System.out.println("Documento atualizado...");
                 }else {
-                    System.out.println("Erro ao salvar");
+                    System.out.println("!!! Erro ao salvar !!!");
                 }
-
 
                 break;
 
+            case 3:
+                break;
+
+            case 4:
+                break;
+
             default:
-                System.out.println("Erro no seletor");
+                System.out.println("!!! Valor invalido !!!");
                 break;
 
         }
 
     }
-
-
-
-
-
-
-
-
-
-
-
 
 }
