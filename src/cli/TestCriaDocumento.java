@@ -81,7 +81,9 @@ void main()  {
 
         seletorNumerico = Integer.parseInt(readln("Selecione uma opção"));
 
-
+        String nome = null;
+        String content = null;
+        long id;
 
         switch (seletorNumerico){
             case 0:
@@ -102,10 +104,10 @@ void main()  {
                 break;
 
             case 2:
-                String nome = readln("Digite o titulo da orientação:\n");
-                String descricao = readln("Digite a descrição:\n");
+                nome = readln("Digite o titulo da orientação:\n");
+                content = readln("Digite a descrição:\n");
 
-                if (service.includeOrientation(nome, descricao)){
+                if (service.includeOrientation(nome, content)){
                     System.out.println("Documento atualizado...");
                 }else {
                     System.out.println("!!! Erro ao salvar !!!");
@@ -114,11 +116,11 @@ void main()  {
                 break;
 
             case 3:
-                Long id = Long.parseLong(readln("Qual item deseja editar?\n"));
-                String novoNome = readln("Digite o titulo da orientação:\n");
-                String novoContent = readln("Digite a descrição:\n");
+                id = Long.parseLong(readln("Qual item deseja editar?\n"));
+                nome = readln("Digite o titulo da orientação:\n");
+                content = readln("Digite a descrição:\n");
 
-                if (service.setOrientation(id, novoNome, novoContent)){
+                if (service.setOrientation(id, nome, content)){
                     System.out.println("Documento atualizado...");
                 }else {
                     System.out.println("!!! Erro ao salvar !!!");
@@ -127,6 +129,13 @@ void main()  {
                 break;
 
             case 4:
+                id = Long.parseLong(readln("Qual item deseja editar?\n"));
+
+                if (service.deleteOrientation(id)){
+                    System.out.println("Item removido com sucesso...");
+                }else {
+                    System.out.println("!!! Erro ao Deletar !!!");
+                }
                 break;
 
             default:

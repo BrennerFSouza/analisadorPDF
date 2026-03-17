@@ -5,13 +5,8 @@
   "orientations": [
     {
       "id": 1,
-      "title": "Teste titulo editado",
-      "content": "Teste descriÃ§Ã£o editado"
-    },
-    {
-      "id": 2,
-      "title": "Teste titulo 2",
-      "content": "Teste descriÃ§Ã£o 2"
+      "title": "OrientaÃ§Ã£o de Teste 1",
+      "content": "Esse Ã© um teste de OrientaÃ§Ã£o 1"
     }
   ]
 }

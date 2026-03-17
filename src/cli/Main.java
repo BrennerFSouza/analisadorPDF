@@ -13,14 +13,12 @@ void main() {
 
         String sourceId = ApiConfig.obterSourceId();
 
-
-        Message pergunta = new Message("user", "Resuma este PDF em 3 frases");
+        Message pergunta = new Message("user", "Qual o nível de testosterona?");
 
         ChatRequest pedido = new ChatRequest(
                 sourceId,
                 new Message[]{pergunta}
         );
-
         System.out.print("⏳ Enviando pergunta para ChatPDF");
         ChatResponse resposta = service.enviarPergunta(pedido);
 
@@ -30,11 +28,8 @@ void main() {
         } else {
             System.out.println("\n❌ Erro na resposta da API");
         }
-
     }catch (Exception e){
         System.err.println("💥 ERRO FATAL: " + e.getMessage());
         e.printStackTrace();
     }
-
-
 }

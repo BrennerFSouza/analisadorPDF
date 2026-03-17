@@ -122,6 +122,7 @@ public class DocumentService {
                 if (listaAtual.get(i).getId() == id){
                     listaAtual.get(i).setTitle(title);
                     listaAtual.get(i).setContent(content);
+                    break;
                 }
             }
         }else{
@@ -138,6 +139,34 @@ public class DocumentService {
     }
 
 
+    public boolean deleteOrientation(long id) {
 
+        List<Orientation> listaAtual = document.getOrientations();
+        int encontrado = -1;
+        if (!listaAtual.isEmpty()){
+            for (int i = 0; i < listaAtual.size(); i++) {
+                if (listaAtual.get(i).getId() == id){
+                    encontrado = i;
+                    break;
+                }
+            }
+        }else{
+            return false;
+        }
 
+        if (encontrado == -1){
+            return false;
+        }
+
+        List<Orientation> listaNova = new ArrayList<>(listaAtual);
+
+        listaNova.remove(listaNova.get(encontrado));
+        document.setOrientations(listaNova);
+
+        if(editDocument(document)){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
