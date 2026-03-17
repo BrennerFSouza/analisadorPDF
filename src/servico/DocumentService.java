@@ -110,10 +110,31 @@ public class DocumentService {
         }else{
             return false;
         }
-
-
         
-        
+    }
+
+    public boolean setOrientation(Long id, String title, String content){
+
+        List<Orientation> listaAtual = document.getOrientations();
+
+        if (!listaAtual.isEmpty()){
+            for (int i = 0; i < listaAtual.size(); i++) {
+                if (listaAtual.get(i).getId() == id){
+                    listaAtual.get(i).setTitle(title);
+                    listaAtual.get(i).setContent(content);
+                }
+            }
+        }else{
+            return false;
+        }
+        document.setOrientations(listaAtual);
+
+        if(editDocument(document)){
+            return true;
+        }else{
+            return false;
+        }
+
     }
 
 

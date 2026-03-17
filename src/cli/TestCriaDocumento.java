@@ -114,6 +114,16 @@ void main()  {
                 break;
 
             case 3:
+                Long id = Long.parseLong(readln("Qual item deseja editar?\n"));
+                String novoNome = readln("Digite o titulo da orientação:\n");
+                String novoContent = readln("Digite a descrição:\n");
+
+                if (service.setOrientation(id, novoNome, novoContent)){
+                    System.out.println("Documento atualizado...");
+                }else {
+                    System.out.println("!!! Erro ao salvar !!!");
+                }
+
                 break;
 
             case 4:
