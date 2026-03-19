@@ -2,11 +2,5 @@
   "documentName": "Nome teste 2",
   "creationDate": "2026-03-15T16:31:29",
   "haveAlteration": false,
-  "orientations": [
-    {
-      "id": 1,
-      "title": "OrientaÃ§Ã£o de Teste 1",
-      "content": "Esse Ã© um teste de OrientaÃ§Ã£o 1"
-    }
-  ]
+  "orientations": []
 }

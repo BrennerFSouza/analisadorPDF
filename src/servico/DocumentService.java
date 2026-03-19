@@ -28,6 +28,10 @@ public class DocumentService {
         this.document = document;
     }
 
+    public Document getDocument() {
+        return document;
+    }
+
     public void setDocument(Document document){
         this.document = document;
     }
@@ -74,6 +78,17 @@ public class DocumentService {
             throw new RuntimeException(e);
         }
 
+    }
+
+    public boolean deleteDocument(String nome){
+        try{
+        Files.delete(Path.of(nome));
+
+        return true;
+
+        }catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public List<Orientation> listOrientations(){
