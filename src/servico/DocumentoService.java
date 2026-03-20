@@ -2,10 +2,9 @@ package servico;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import modelo.Document;
-import modelo.Orientation;
+import modelo.Documento;
+import modelo.Orientacao;
 
-import javax.print.Doc;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -14,36 +13,36 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DocumentService {
-    private Document document;
+public class DocumentoService {
+    private Documento documento;
     private Gson gson = new GsonBuilder()
             .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
             .setPrettyPrinting()
             .create();
 
-    public DocumentService() {
+    public DocumentoService() {
     }
 
-    public DocumentService(Document document) {
-        this.document = document;
+    public DocumentoService(Documento documento) {
+        this.documento = documento;
     }
 
-    public Document getDocument() {
-        return document;
+    public Documento getDocumento() {
+        return documento;
     }
 
-    public void setDocument(Document document){
-        this.document = document;
+    public void setDocument(Documento documento){
+        this.documento = documento;
     }
 
-    public String[] listDocuments(){
+    public String[] listarDocumentos(){
       var path = new File(".");
 
       return path.list(((dir, name) -> name.endsWith(".json")));
 
     }
     public boolean createDocument(String nome) {
-        var document = new Document(nome);
+        var document = new Documento(nome);
         String json = gson.toJson(document);
 
         try (FileWriter writer = new FileWriter(nome + ".json")) {
@@ -56,10 +55,10 @@ public class DocumentService {
         }
     }
 
-    public boolean editDocument(Document document){
-        String json = gson.toJson(document);
+    public boolean editDocument(Documento documento){
+        String json = gson.toJson(documento);
 
-        try (FileWriter writer = new FileWriter(document.getDocumentName() + ".json")) {
+        try (FileWriter writer = new FileWriter(documento.getDocumentoNome() + ".json")) {
             writer.write(json);
 
             return true;
@@ -69,11 +68,11 @@ public class DocumentService {
         }
     }
 
-    public Document readDocument(String nome){
+    public Documento getDocumento(String nome){
         try{
             String textDocument = Files.readString(Path.of(nome));
-            setDocument(gson.fromJson(textDocument, Document.class));
-            return gson.fromJson(textDocument, Document.class);
+            setDocument(gson.fromJson(textDocument, Documento.class));
+            return gson.fromJson(textDocument, Documento.class);
         }catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -91,19 +90,18 @@ public class DocumentService {
         }
     }
 
-    public List<Orientation> listOrientations(){
-            return document.getOrientations();
+    public List<Orientacao> listarOrientacoes(){
+            return documento.getOrientations();
     }
 
     @Override
     public String toString() {
-        return "DocumentService{" +
-                "document=" + document +
-                '}';
+        return
+                "" + documento + '\n' ;
     }
 
     public boolean includeOrientation(String title, String descricao){
-        List<Orientation> listaAtual = document.getOrientations();
+        List<Orientacao> listaAtual = documento.getOrientations();
         long id = 1;
         
         if (!listaAtual.isEmpty()){
@@ -114,13 +112,13 @@ public class DocumentService {
             }
         }
 
-        List<Orientation> listaNova = (listaAtual == null)? new ArrayList<>() : new ArrayList<>(listaAtual);
+        List<Orientacao> listaNova = (listaAtual == null)? new ArrayList<>() : new ArrayList<>(listaAtual);
 
-        listaNova.add(new Orientation(id, title, descricao));
+        listaNova.add(new Orientacao(id, title, descricao));
 
-        document.setOrientations(listaNova);
+        documento.setOrientations(listaNova);
 
-        if(editDocument(document)){
+        if(editDocument(documento)){
             return true;
         }else{
             return false;
@@ -130,7 +128,7 @@ public class DocumentService {
 
     public boolean setOrientation(Long id, String title, String content){
 
-        List<Orientation> listaAtual = document.getOrientations();
+        List<Orientacao> listaAtual = documento.getOrientations();
 
         if (!listaAtual.isEmpty()){
             for (int i = 0; i < listaAtual.size(); i++) {
@@ -143,9 +141,9 @@ public class DocumentService {
         }else{
             return false;
         }
-        document.setOrientations(listaAtual);
+        documento.setOrientations(listaAtual);
 
-        if(editDocument(document)){
+        if(editDocument(documento)){
             return true;
         }else{
             return false;
@@ -154,9 +152,9 @@ public class DocumentService {
     }
 
 
-    public boolean deleteOrientation(long id) {
+    public boolean deletarOrientacao(long id) {
 
-        List<Orientation> listaAtual = document.getOrientations();
+        List<Orientacao> listaAtual = documento.getOrientations();
         int encontrado = -1;
         if (!listaAtual.isEmpty()){
             for (int i = 0; i < listaAtual.size(); i++) {
@@ -173,12 +171,12 @@ public class DocumentService {
             return false;
         }
 
-        List<Orientation> listaNova = new ArrayList<>(listaAtual);
+        List<Orientacao> listaNova = new ArrayList<>(listaAtual);
 
         listaNova.remove(listaNova.get(encontrado));
-        document.setOrientations(listaNova);
+        documento.setOrientations(listaNova);
 
-        if(editDocument(document)){
+        if(editDocument(documento)){
             return true;
         }else{
             return false;

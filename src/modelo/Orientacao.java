@@ -1,11 +1,11 @@
 package modelo;
 
-public class Orientation {
+public class Orientacao {
     private long id;
     private String title;
     private String content;
 
-    public Orientation(long id, String title, String content) {
+    public Orientacao(long id, String title, String content) {
         if (title.length() < 10){
             throw new RuntimeException("Titulo deve ter mais que 10 caracteres: " + title);
         }
@@ -40,7 +40,7 @@ public class Orientation {
 
     @Override
     public String toString() {
-        return "Orientation{" +
+        return "Orientacao{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
