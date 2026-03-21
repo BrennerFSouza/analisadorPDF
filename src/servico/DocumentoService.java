@@ -15,7 +15,7 @@ import java.util.List;
 
 public class DocumentoService {
     private Documento documento;
-    private Gson gson = new GsonBuilder()
+    private final Gson gson = new GsonBuilder()
             .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
             .setPrettyPrinting()
             .create();
@@ -27,21 +27,22 @@ public class DocumentoService {
         this.documento = documento;
     }
 
-    public Documento getDocumento() {
+    public Documento buscarDocumento() {
         return documento;
     }
 
-    public void setDocument(Documento documento){
+    public void editarDocumento(Documento documento) {
         this.documento = documento;
     }
 
-    public String[] listarDocumentos(){
-      var path = new File(".");
+    public String[] listarDocumentos() {
+        var path = new File(".");
 
-      return path.list(((dir, name) -> name.endsWith(".json")));
+        return path.list(((dir, name) -> name.endsWith(".json")));
 
     }
-    public boolean createDocument(String nome) {
+
+    public boolean criarDocumento(String nome) {
         var document = new Documento(nome);
         String json = gson.toJson(document);
 
@@ -55,7 +56,7 @@ public class DocumentoService {
         }
     }
 
-    public boolean editDocument(Documento documento){
+    public boolean editarDocument(Documento documento) {
         String json = gson.toJson(documento);
 
         try (FileWriter writer = new FileWriter(documento.getDocumentoNome() + ".json")) {
@@ -68,118 +69,106 @@ public class DocumentoService {
         }
     }
 
-    public Documento getDocumento(String nome){
-        try{
+    public Documento buscarDocumento(String nome) {
+        try {
             String textDocument = Files.readString(Path.of(nome));
-            setDocument(gson.fromJson(textDocument, Documento.class));
+            editarDocumento(gson.fromJson(textDocument, Documento.class));
             return gson.fromJson(textDocument, Documento.class);
-        }catch (IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
     }
 
-    public boolean deleteDocument(String nome){
-        try{
-        Files.delete(Path.of(nome));
+    public boolean deletarDocumento(String nome) {
+        try {
+            Files.delete(Path.of(nome));
 
-        return true;
+            return true;
 
-        }catch (IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public List<Orientacao> listarOrientacoes(){
-            return documento.getOrientations();
+    public List<Orientacao> listarOrientacoes() {
+        return documento.getOrientacoes();
     }
 
     @Override
     public String toString() {
         return
-                "" + documento + '\n' ;
+                "" + documento + '\n';
     }
 
-    public boolean includeOrientation(String title, String descricao){
-        List<Orientacao> listaAtual = documento.getOrientations();
+    public boolean incluirOrientacao(String title, String descricao) {
+        List<Orientacao> listaAtual = documento.getOrientacoes();
         long id = 1;
-        
-        if (!listaAtual.isEmpty()){
+
+        if (!listaAtual.isEmpty()) {
             for (int i = 0; i < listaAtual.size(); i++) {
-                if (listaAtual.get(i).getId() == id){
+                if (listaAtual.get(i).getId() == id) {
                     id++;
                 }
             }
         }
 
-        List<Orientacao> listaNova = (listaAtual == null)? new ArrayList<>() : new ArrayList<>(listaAtual);
+        List<Orientacao> listaNova = (listaAtual == null) ? new ArrayList<>() : new ArrayList<>(listaAtual);
 
         listaNova.add(new Orientacao(id, title, descricao));
 
-        documento.setOrientations(listaNova);
+        documento.setOrientacoes(listaNova);
 
-        if(editDocument(documento)){
-            return true;
-        }else{
-            return false;
-        }
-        
+        return editarDocument(documento);
+
     }
 
-    public boolean setOrientation(Long id, String title, String content){
+    public boolean editarOrientacao(Long id, String title, String content) {
 
-        List<Orientacao> listaAtual = documento.getOrientations();
+        List<Orientacao> listaAtual = documento.getOrientacoes();
 
-        if (!listaAtual.isEmpty()){
+        if (!listaAtual.isEmpty()) {
             for (int i = 0; i < listaAtual.size(); i++) {
-                if (listaAtual.get(i).getId() == id){
+                if (listaAtual.get(i).getId() == id) {
                     listaAtual.get(i).setTitle(title);
                     listaAtual.get(i).setContent(content);
                     break;
                 }
             }
-        }else{
+        } else {
             return false;
         }
-        documento.setOrientations(listaAtual);
+        documento.setOrientacoes(listaAtual);
 
-        if(editDocument(documento)){
-            return true;
-        }else{
-            return false;
-        }
+        return editarDocument(documento);
 
     }
 
 
     public boolean deletarOrientacao(long id) {
 
-        List<Orientacao> listaAtual = documento.getOrientations();
+        List<Orientacao> listaAtual = documento.getOrientacoes();
         int encontrado = -1;
-        if (!listaAtual.isEmpty()){
+        if (!listaAtual.isEmpty()) {
             for (int i = 0; i < listaAtual.size(); i++) {
-                if (listaAtual.get(i).getId() == id){
+                if (listaAtual.get(i).getId() == id) {
                     encontrado = i;
                     break;
                 }
             }
-        }else{
+        } else {
             return false;
         }
 
-        if (encontrado == -1){
+        if (encontrado == -1) {
             return false;
         }
 
         List<Orientacao> listaNova = new ArrayList<>(listaAtual);
 
         listaNova.remove(listaNova.get(encontrado));
-        documento.setOrientations(listaNova);
+        documento.setOrientacoes(listaNova);
 
-        if(editDocument(documento)){
-            return true;
-        }else{
-            return false;
-        }
+        return editarDocument(documento);
     }
 }

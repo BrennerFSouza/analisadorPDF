@@ -1,6 +1,6 @@
 package servico;
+
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import configuracao.ApiConfig;
 import modelo.ChatRequest;
 import modelo.ChatResponse;
@@ -9,8 +9,6 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import static java.net.http.HttpRequest.BodyPublishers.ofString;
-import static java.net.http.HttpResponse.BodyHandlers.ofString;
 
 public class ChatPdfService {
     private final HttpClient client;
@@ -27,8 +25,8 @@ public class ChatPdfService {
     }
 
     //METODS
-    public ChatResponse enviarPergunta(ChatRequest request){
-        try{
+    public ChatResponse enviarPergunta(ChatRequest request) {
+        try {
             String jsonRequest = gson.toJson(request);
 
             HttpRequest httpRequest = HttpRequest.newBuilder()
@@ -42,13 +40,13 @@ public class ChatPdfService {
                     HttpResponse.BodyHandlers.ofString());
 
 
-            if (response.statusCode() != 200){
+            if (response.statusCode() != 200) {
                 System.err.println("❌ API ERRO " + response.statusCode());
                 return null;
             }
 
             return gson.fromJson(response.body(), ChatResponse.class);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.err.println("❌ ERRO: " + e.getMessage());
             return null;
         }

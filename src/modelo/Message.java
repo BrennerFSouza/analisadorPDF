@@ -5,8 +5,10 @@ public class Message {
     private String content;
 
     //Constructor
-    public Message(){}
-    public Message(String role, String content){
+    public Message() {
+    }
+
+    public Message(String role, String content) {
         this.role = role;
         this.content = content;
     }

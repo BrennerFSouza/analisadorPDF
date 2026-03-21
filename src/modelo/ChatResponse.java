@@ -2,11 +2,12 @@ package modelo;
 
 public class ChatResponse {
     private String content;
-    private  String sourceId;
+    private String sourceId;
     private String sessionId;
 
     //CONSTRUCTORS
-    public ChatResponse() {}
+    public ChatResponse() {
+    }
 
     public ChatResponse(String text, String sourceId, String sessionId) {
         this.content = text;
@@ -20,20 +21,20 @@ public class ChatResponse {
         return content;
     }
 
-    public String getSourceId() {
-        return sourceId;
-    }
-
-    public String getSessionId() {
-        return sessionId;
-    }
-
     public void setContent(String content) {
         this.content = content;
     }
 
+    public String getSourceId() {
+        return sourceId;
+    }
+
     public void setSourceId(String sourceId) {
         this.sourceId = sourceId;
+    }
+
+    public String getSessionId() {
+        return sessionId;
     }
 
     public void setSessionId(String sessionId) {

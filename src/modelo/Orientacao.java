@@ -6,7 +6,7 @@ public class Orientacao {
     private String content;
 
     public Orientacao(long id, String title, String content) {
-        if (title.length() < 10){
+        if (title.length() < 10) {
             throw new RuntimeException("Titulo deve ter mais que 10 caracteres: " + title);
         }
         this.id = id;

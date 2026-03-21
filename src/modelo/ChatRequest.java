@@ -6,9 +6,10 @@ public class ChatRequest {
 
     //CONSTRUCTOR
 
-    public ChatRequest(){}
+    public ChatRequest() {
+    }
 
-    public ChatRequest(String sourceId, Message[] messages){
+    public ChatRequest(String sourceId, Message[] messages) {
         this.sourceId = sourceId;
         this.messages = messages;
     }

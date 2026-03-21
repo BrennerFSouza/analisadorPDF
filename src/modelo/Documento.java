@@ -1,6 +1,8 @@
 package modelo;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
 public class Documento {
     private String sourceId;
@@ -41,12 +43,12 @@ public class Documento {
         this.dataCriacao = dataCriacao;
     }
 
-    public void setDataAlteracao(Date dataAlteracao) {
-        this.dataAlteracao = dataAlteracao;
-    }
-
     public Date getDataAlteracao() {
         return dataAlteracao;
+    }
+
+    public void setDataAlteracao(Date dataAlteracao) {
+        this.dataAlteracao = dataAlteracao;
     }
 
     public boolean isTemAlteracao() {
@@ -57,14 +59,14 @@ public class Documento {
         this.temAlteracao = temAlteracao;
     }
 
-    public List<Orientacao> getOrientations() {
-        if(this.orientacoes == null){
+    public List<Orientacao> getOrientacoes() {
+        if (this.orientacoes == null) {
             return Collections.emptyList();
         }
         return orientacoes;
     }
 
-    public void setOrientations(List<Orientacao> orientacoes) {
+    public void setOrientacoes(List<Orientacao> orientacoes) {
         this.orientacoes = orientacoes;
     }
 
@@ -72,10 +74,10 @@ public class Documento {
     public String toString() {
         return
                 "sourceId='" + sourceId + '\n' +
-                "documentName='" + nomeDocumento + '\n' +
-                "creationDate=" + dataCriacao + '\n' +
-                "alterationDate=" + dataAlteracao + '\n' +
-                "haveAlteration=" + temAlteracao + '\n' +
-                "orientacoes=" + orientacoes;
+                        "documentName='" + nomeDocumento + '\n' +
+                        "creationDate=" + dataCriacao + '\n' +
+                        "alterationDate=" + dataAlteracao + '\n' +
+                        "haveAlteration=" + temAlteracao + '\n' +
+                        "orientacoes=" + orientacoes;
     }
 }

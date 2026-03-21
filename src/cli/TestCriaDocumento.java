@@ -3,10 +3,9 @@ import servico.DocumentoService;
 
 import static java.lang.IO.readln;
 
-void main()  {
+void main() {
     //LISTAR DOCUMENTOS
     var service = new DocumentoService();
-
 
 
     int seletorNumerico = -1;
@@ -22,16 +21,16 @@ void main()  {
         seletorNumerico = Integer.parseInt(readln("Selecione:\n"));
         String[] listaDocumentos = service.listarDocumentos();
 
-        switch (seletorNumerico){
+        switch (seletorNumerico) {
             case 0:
                 break;
 
             case 1:
 
                 System.out.println("Lista de documentos");
-                if (listaDocumentos != null){
+                if (listaDocumentos != null) {
                     for (int i = 0; i < listaDocumentos.length; i++) {
-                        System.out.println(i+1 +" - "+listaDocumentos[i]);
+                        System.out.println(i + 1 + " - " + listaDocumentos[i]);
                     }
                 }
                 System.out.println();
@@ -40,15 +39,15 @@ void main()  {
             case 2:
 
                 String nomeNovoDocumento = readln("Digite o nome para o novo Documento");
-                service.createDocument(nomeNovoDocumento);
+                service.criarDocumento(nomeNovoDocumento);
                 break;
             case 3:
                 seletorDocumento = Integer.parseInt(readln("Qual documento deseja selecionar?\n"));
-                var document = service.getDocumento(listaDocumentos[seletorDocumento - 1]);
+                var document = service.buscarDocumento(listaDocumentos[seletorDocumento - 1]);
                 System.out.println("Documento Selecionado");
-                System.out.println(service.toString());
+                System.out.println(service);
                 seletorNumericoOrientacao = -1;
-                while (seletorNumericoOrientacao != 0){
+                while (seletorNumericoOrientacao != 0) {
                     System.out.println("0 - para sair do documento");
                     System.out.println("1 - Listar Orientações");
                     System.out.println("2 - Criar nova orientação");
@@ -62,7 +61,7 @@ void main()  {
                     String conteudo = null;
                     long id;
 
-                    switch (seletorNumericoOrientacao){
+                    switch (seletorNumericoOrientacao) {
                         case 0:
                             System.out.println("Saindo do documento...");
                             break;
@@ -70,11 +69,11 @@ void main()  {
                         case 1:
                             List<Orientacao> listaOrientacoes = service.listarOrientacoes();
 
-                            if (!listaOrientacoes.isEmpty()){
+                            if (!listaOrientacoes.isEmpty()) {
                                 for (int i = 0; i < listaOrientacoes.size(); i++) {
                                     System.out.println(listaOrientacoes.get(i));
                                 }
-                            }else {
+                            } else {
                                 System.out.println("Sem orientações");
                             }
 
@@ -84,9 +83,9 @@ void main()  {
                             nome = readln("Digite o titulo da orientação:\n");
                             conteudo = readln("Digite a descrição:\n");
 
-                            if (service.includeOrientation(nome, conteudo)){
+                            if (service.incluirOrientacao(nome, conteudo)) {
                                 System.out.println("Documento atualizado...");
-                            }else {
+                            } else {
                                 System.out.println("!!! Erro ao salvar !!!");
                             }
 
@@ -97,9 +96,9 @@ void main()  {
                             nome = readln("Digite o titulo da orientação:\n");
                             conteudo = readln("Digite a descrição:\n");
 
-                            if (service.setOrientation(id, nome, conteudo)){
+                            if (service.editarOrientacao(id, nome, conteudo)) {
                                 System.out.println("Documento atualizado...");
-                            }else {
+                            } else {
                                 System.out.println("!!! Erro ao salvar !!!");
                             }
 
@@ -108,17 +107,17 @@ void main()  {
                         case 4:
                             id = Long.parseLong(readln("Qual item deseja editar?\n"));
 
-                            if (service.deletarOrientacao(id)){
+                            if (service.deletarOrientacao(id)) {
                                 System.out.println("Item removido com sucesso...");
-                            }else {
+                            } else {
                                 System.out.println("!!! Erro ao Deletar !!!");
                             }
                             break;
 
                         case 5:
-                            if (service.deleteDocument(service.getDocumento().getDocumentoNome() + ".json")){
-                                System.out.printf("Item removido com sucesso");
-                            }else {
+                            if (service.deletarDocumento(service.buscarDocumento().getDocumentoNome() + ".json")) {
+                                System.out.print("Item removido com sucesso");
+                            } else {
                                 System.out.println("Erro ao deletar");
                             }
                         default:
@@ -133,13 +132,11 @@ void main()  {
                 break;
 
             default:
-                System.out.printf("Opção invalida");
+                System.out.print("Opção invalida");
                 break;
         }
 
     }
-
-
 
 
 }
