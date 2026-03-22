@@ -96,7 +96,7 @@ void main() {
                             titulo = readln("Digite o titulo da orientação:\n");
                             conteudo = readln("Digite a descrição:\n");
 
-                            service.editarOrientacao(documento,id, titulo, conteudo);
+                            service.editarOrientacao(documento, id, titulo, conteudo);
                             System.out.println("Documento atualizado...");
 
 

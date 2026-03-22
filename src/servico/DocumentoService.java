@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DocumentoService {
-    private DocumentoRepository repository = new DocumentoRepository();
+    private final DocumentoRepository repository = new DocumentoRepository();
 
     public DocumentoService() {
     }
@@ -34,8 +34,7 @@ public class DocumentoService {
     public Documento buscarDocumento(String nome) {
 
         String textDocument = repository.lerDocumento(nome);
-        return  repository.carregarDocumento(textDocument, Documento.class);
-
+        return repository.carregarDocumento(textDocument, Documento.class);
 
 
     }
@@ -49,7 +48,7 @@ public class DocumentoService {
         return doc.getOrientacoes();
     }
 
-    public void incluirOrientacao(String nomeDoc,String title, String descricao) {
+    public void incluirOrientacao(String nomeDoc, String title, String descricao) {
 
         Documento doc = repository.buscarPorNome(nomeDoc);
         List<Orientacao> orientacoes = new ArrayList<>(doc.getOrientacoes());
@@ -71,7 +70,7 @@ public class DocumentoService {
 
     }
 
-    public void editarOrientacao(Documento doc,Long id, String title, String content) {
+    public void editarOrientacao(Documento doc, Long id, String title, String content) {
 
         List<Orientacao> orientacoes = doc.getOrientacoes();
 
@@ -91,7 +90,7 @@ public class DocumentoService {
     }
 
 
-    public boolean deletarOrientacao(Documento doc,long id) {
+    public boolean deletarOrientacao(Documento doc, long id) {
         List<Orientacao> orientacoes = new ArrayList<>(doc.getOrientacoes());
         int encontrado = -1;
         if (!orientacoes.isEmpty()) {
@@ -108,7 +107,6 @@ public class DocumentoService {
         if (encontrado == -1) {
             return false;
         }
-
 
 
         orientacoes.remove(orientacoes.get(encontrado));

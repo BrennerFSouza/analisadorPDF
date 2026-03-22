@@ -31,7 +31,7 @@ public class DocumentoRepository {
     }
 
     public String lerDocumento(String nome) {
-        try{
+        try {
             return Files.readString(Path.of(nome));
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -39,8 +39,10 @@ public class DocumentoRepository {
     }
 
     public Documento buscarPorNome(String nome) {
-        try{
-            if (!nome.contains(".json")){nome += ".json";}
+        try {
+            if (!nome.contains(".json")) {
+                nome += ".json";
+            }
             String json = Files.readString(Path.of(nome));
             return gson.fromJson(json, Documento.class);
         } catch (IOException e) {
@@ -49,7 +51,7 @@ public class DocumentoRepository {
     }
 
     public void salvar(Documento doc) {
-        try(FileWriter writer = new FileWriter(doc.getNome() + ".json")){
+        try (FileWriter writer = new FileWriter(doc.getNome() + ".json")) {
             String json = gson.toJson(doc);
             writer.write(json);
 

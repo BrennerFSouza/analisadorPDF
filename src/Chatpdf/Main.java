@@ -1,8 +1,4 @@
-import Chatpdf.ApiConfig;
-import Chatpdf.ChatRequest;
-import Chatpdf.ChatResponse;
-import Chatpdf.Message;
-import Chatpdf.ChatPdfService;
+import Chatpdf.*;
 
 void main() {
 
