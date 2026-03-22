@@ -54,15 +54,9 @@ public class DocumentoService {
 
     public boolean editarDocument(Documento documento) {
         String json = repository.converterParaJson(documento);
+        repository.salvarDocumento(documento.getDocumentoNome() + ".json", json);
+        return true;
 
-        try (FileWriter writer = new FileWriter(documento.getDocumentoNome() + ".json")) {
-            writer.write(json);
-
-            return true;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
     }
 
     public Documento buscarDocumento(String nome) {
