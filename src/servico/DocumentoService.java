@@ -9,18 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DocumentoService {
-    private Documento documento;
     private DocumentoRepository repository = new DocumentoRepository();
 
     public DocumentoService() {
-    }
-
-    public Documento buscarDocumento() {
-        return documento;
-    }
-
-    public void editarDocumento(Documento documento) {
-        this.documento = documento;
     }
 
     public String[] listarDocumentos() {
@@ -42,10 +33,9 @@ public class DocumentoService {
 
     public Documento buscarDocumento(String nome) {
 
-            String textDocument = repository.lerDocumento(nome);
-            var documento = repository.converterJsonParaDocumento(textDocument, Documento.class);
-            editarDocumento(documento);
-            return documento;
+        String textDocument = repository.lerDocumento(nome);
+        return  repository.converterJsonParaDocumento(textDocument, Documento.class);
+
 
 
     }
@@ -81,22 +71,22 @@ public class DocumentoService {
 
     }
 
-    public void editarOrientacao(Long id, String title, String content) {
+    public void editarOrientacao(Documento doc,Long id, String title, String content) {
 
-        List<Orientacao> listaAtual = documento.getOrientacoes();
+        List<Orientacao> orientacoes = doc.getOrientacoes();
 
-        if (!listaAtual.isEmpty()) {
-            for (int i = 0; i < listaAtual.size(); i++) {
-                if (listaAtual.get(i).getId() == id) {
-                    listaAtual.get(i).setTitle(title);
-                    listaAtual.get(i).setContent(content);
+        if (!orientacoes.isEmpty()) {
+            for (int i = 0; i < orientacoes.size(); i++) {
+                if (orientacoes.get(i).getId() == id) {
+                    orientacoes.get(i).setTitle(title);
+                    orientacoes.get(i).setContent(content);
                     break;
                 }
             }
         }
-        documento.setOrientacoes(listaAtual);
+        doc.setOrientacoes(orientacoes);
 
-        editarDocument(documento);
+        editarDocument(doc);
 
     }
 

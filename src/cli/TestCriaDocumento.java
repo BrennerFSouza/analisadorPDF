@@ -1,3 +1,4 @@
+import modelo.Documento;
 import modelo.Orientacao;
 import servico.DocumentoService;
 
@@ -43,7 +44,7 @@ void main() {
                 break;
             case 3:
                 seletorDocumento = Integer.parseInt(readln("Qual documento deseja selecionar?\n"));
-                var documento = service.buscarDocumento(listaDocumentos[seletorDocumento - 1]);
+                Documento documento = service.buscarDocumento(listaDocumentos[seletorDocumento - 1]);
                 System.out.println("Documento Selecionado");
                 System.out.println(documento);
                 String nomeDoc = documento.getNome();
@@ -95,7 +96,7 @@ void main() {
                             titulo = readln("Digite o titulo da orientação:\n");
                             conteudo = readln("Digite a descrição:\n");
 
-                            service.editarOrientacao(id, titulo, conteudo);
+                            service.editarOrientacao(documento,id, titulo, conteudo);
                             System.out.println("Documento atualizado...");
 
 
@@ -112,7 +113,7 @@ void main() {
                             break;
 
                         case 5:
-                            if (service.deletarDocumento(service.buscarDocumento().getNome() + ".json")) {
+                            if (service.deletarDocumento(documento.getNome() + ".json")) {
                                 System.out.print("Item removido com sucesso");
                             } else {
                                 System.out.println("Erro ao deletar");
