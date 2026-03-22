@@ -6,6 +6,8 @@ import modelo.Documento;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class DocumentoRepository {
     private final Gson gson = new GsonBuilder()
@@ -28,6 +30,14 @@ public class DocumentoRepository {
         try(FileWriter writer = new FileWriter(s)){
             writer.write(json);
 
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deletarDocumento(String nome) {
+        try {
+            Files.delete(Path.of(nome));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

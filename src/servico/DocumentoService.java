@@ -41,15 +41,8 @@ public class DocumentoService {
     public boolean criarDocumento(String nome) {
         var documento = new Documento(nome);
         String json = repository.converterParaJson(documento);
-
-        try (FileWriter writer = new FileWriter(nome + ".json")) {
-            writer.write(json);
-
-            return true;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
+        repository.salvarDocumento(documento.getDocumentoNome() + ".json", json);
+        return true;
     }
 
     public boolean editarDocument(Documento documento) {
@@ -72,14 +65,8 @@ public class DocumentoService {
     }
 
     public boolean deletarDocumento(String nome) {
-        try {
-            Files.delete(Path.of(nome));
-
-            return true;
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        repository.deletarDocumento(nome);
+        return true;
     }
 
     public List<Orientacao> listarOrientacoes() {
