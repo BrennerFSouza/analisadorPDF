@@ -113,7 +113,7 @@ void main() {
                             break;
 
                         case 5:
-                            if (service.deletarDocumento(documento.getNome() + ".json")) {
+                            if (service.deletarDocumento(documento)) {
                                 System.out.print("Item removido com sucesso");
                             } else {
                                 System.out.println("Erro ao deletar");

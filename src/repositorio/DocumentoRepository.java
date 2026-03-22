@@ -18,17 +18,13 @@ public class DocumentoRepository {
     public DocumentoRepository() {
     }
 
-    public String converterParaJson(Documento document) {
-        return gson.toJson(document);
-    }
-
-    public Documento converterJsonParaDocumento(String textDocument, Class<Documento> documentoClass) {
+    public Documento carregarDocumento(String textDocument, Class<Documento> documentoClass) {
         return gson.fromJson(textDocument, documentoClass);
     }
 
-    public void deletarDocumento(String nome) {
+    public void deletarDocumento(Documento doc) {
         try {
-            Files.delete(Path.of(nome));
+            Files.delete(Path.of(doc.getNome() + ".json"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

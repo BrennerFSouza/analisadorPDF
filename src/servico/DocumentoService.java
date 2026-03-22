@@ -34,14 +34,14 @@ public class DocumentoService {
     public Documento buscarDocumento(String nome) {
 
         String textDocument = repository.lerDocumento(nome);
-        return  repository.converterJsonParaDocumento(textDocument, Documento.class);
+        return  repository.carregarDocumento(textDocument, Documento.class);
 
 
 
     }
 
-    public boolean deletarDocumento(String nome) {
-        repository.deletarDocumento(nome);
+    public boolean deletarDocumento(Documento doc) {
+        repository.deletarDocumento(doc);
         return true;
     }
 
