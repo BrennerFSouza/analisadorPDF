@@ -49,7 +49,7 @@ javac -cp "lib/gson-2.10.1.jar" -d bin src/*.java src/*/*.java
 # Execute (SEUS dados!)
 java -Dchatpdf.api.key=sec_u455RyzsK8cg06gJ5u6Bg21r9D3YdMM0 ^
      -Dchatpdf.source.id=SEU_SOURCEID ^
-     -cp "bin:lib/*" analisadorpdf2.cli.Main
+     -cp "bin:lib/*" analisadorpdf2.cli.Chatpdf.Main
 📱 Exemplo Saída
 text
 🔍 Iniciando Analisador PDF com ChatPDF...
@@ -76,7 +76,7 @@ analisadorPDF/
 │   └── gson-2.10.1.jar      # 📦 JSON
 └── src/
 ├── cli/
-│   └── Main.java        # 🚪 Entry point
+│   └── Chatpdf.Main.java        # 🚪 Entry point
 ├── modelo/              # 📦 Dados
 │   ├── Message.java
 │   ├── ChatRequest.java
@@ -101,7 +101,7 @@ Tratamento exceções
 🛠️ Camadas da Arquitetura
 text
 graph TB
-A[Main.java] --> B[ApiConfig]
+A[Chatpdf.Main.java] --> B[ApiConfig]
 B --> C[ChatRequest]
 C --> D[ChatPdfService]
 D --> E[HttpClient]

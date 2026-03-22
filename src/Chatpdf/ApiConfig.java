@@ -1,4 +1,4 @@
-package configuracao;
+package Chatpdf;
 
 public class ApiConfig {
     public static final String URL_BASE = "https://api.chatpdf.com/v1";

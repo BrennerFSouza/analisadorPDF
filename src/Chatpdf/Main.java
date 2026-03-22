@@ -1,8 +1,8 @@
-import configuracao.ApiConfig;
-import modelo.ChatRequest;
-import modelo.ChatResponse;
-import modelo.Message;
-import servico.ChatPdfService;
+import Chatpdf.ApiConfig;
+import Chatpdf.ChatRequest;
+import Chatpdf.ChatResponse;
+import Chatpdf.Message;
+import Chatpdf.ChatPdfService;
 
 void main() {
 

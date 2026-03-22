@@ -1,4 +1,4 @@
-package modelo;
+package Chatpdf;
 
 public class ChatRequest {
     private String sourceId;

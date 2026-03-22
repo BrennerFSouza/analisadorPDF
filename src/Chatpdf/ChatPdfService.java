@@ -1,9 +1,6 @@
-package servico;
+package Chatpdf;
 
 import com.google.gson.Gson;
-import configuracao.ApiConfig;
-import modelo.ChatRequest;
-import modelo.ChatResponse;
 
 import java.net.URI;
 import java.net.http.HttpClient;
