@@ -42,4 +42,12 @@ public class DocumentoRepository {
             throw new RuntimeException(e);
         }
     }
+
+    public String lerDocumento(String nome) {
+        try{
+            return Files.readString(Path.of(nome));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

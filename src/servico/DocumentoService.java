@@ -5,10 +5,6 @@ import modelo.Orientacao;
 import repositorio.DocumentoRepository;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,10 +13,6 @@ public class DocumentoService {
     private DocumentoRepository repository = new DocumentoRepository();
 
     public DocumentoService() {
-    }
-
-    public DocumentoService(Documento documento) {
-        this.documento = documento;
     }
 
     public Documento buscarDocumento() {
@@ -53,14 +45,12 @@ public class DocumentoService {
     }
 
     public Documento buscarDocumento(String nome) {
-        try {
-            String textDocument = Files.readString(Path.of(nome));
+
+            String textDocument = repository.lerDocumento(nome);
             var documento = repository.converterJsonParaDocumento(textDocument, Documento.class);
             editarDocumento(documento);
             return documento;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+
 
     }
 
