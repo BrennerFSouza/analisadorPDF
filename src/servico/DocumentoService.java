@@ -1,9 +1,8 @@
 package servico;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import modelo.Documento;
 import modelo.Orientacao;
+import repositorio.DocumentoRepository;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -15,10 +14,7 @@ import java.util.List;
 
 public class DocumentoService {
     private Documento documento;
-    private final Gson gson = new GsonBuilder()
-            .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-            .setPrettyPrinting()
-            .create();
+    private DocumentoRepository repository = new DocumentoRepository();
 
     public DocumentoService() {
     }
@@ -43,8 +39,8 @@ public class DocumentoService {
     }
 
     public boolean criarDocumento(String nome) {
-        var document = new Documento(nome);
-        String json = gson.toJson(document);
+        var documento = new Documento(nome);
+        String json = repository.converterParaJson(documento);
 
         try (FileWriter writer = new FileWriter(nome + ".json")) {
             writer.write(json);
@@ -57,7 +53,7 @@ public class DocumentoService {
     }
 
     public boolean editarDocument(Documento documento) {
-        String json = gson.toJson(documento);
+        String json = repository.converterParaJson(documento);
 
         try (FileWriter writer = new FileWriter(documento.getDocumentoNome() + ".json")) {
             writer.write(json);
@@ -72,8 +68,9 @@ public class DocumentoService {
     public Documento buscarDocumento(String nome) {
         try {
             String textDocument = Files.readString(Path.of(nome));
-            editarDocumento(gson.fromJson(textDocument, Documento.class));
-            return gson.fromJson(textDocument, Documento.class);
+            var documento = repository.converterJsonParaDocumento(textDocument, Documento.class);
+            editarDocumento(documento);
+            return documento;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
