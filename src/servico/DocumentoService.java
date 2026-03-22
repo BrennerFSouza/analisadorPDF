@@ -30,17 +30,13 @@ public class DocumentoService {
 
     }
 
-    public boolean criarDocumento(String nome) {
+    public void criarDocumento(String nome) {
         var documento = new Documento(nome);
-        String json = repository.converterParaJson(documento);
-        repository.salvarDocumento(documento.getDocumentoNome() + ".json", json);
-        return true;
+        repository.salvar(documento);
     }
 
-    public boolean editarDocument(Documento documento) {
-        String json = repository.converterParaJson(documento);
-        repository.salvarDocumento(documento.getDocumentoNome() + ".json", json);
-        return true;
+    public void editarDocument(Documento doc) {
+        repository.salvar(doc);
 
     }
 
@@ -59,39 +55,33 @@ public class DocumentoService {
         return true;
     }
 
-    public List<Orientacao> listarOrientacoes() {
-        return documento.getOrientacoes();
+    public List<Orientacao> listarOrientacoes(Documento doc) {
+        return doc.getOrientacoes();
     }
 
-    @Override
-    public String toString() {
-        return
-                "" + documento + '\n';
-    }
+    public void incluirOrientacao(String nomeDoc,String title, String descricao) {
 
-    public boolean incluirOrientacao(String title, String descricao) {
-        List<Orientacao> listaAtual = documento.getOrientacoes();
+        Documento doc = repository.buscarPorNome(nomeDoc);
+        List<Orientacao> orientacoes = new ArrayList<>(doc.getOrientacoes());
         long id = 1;
 
-        if (!listaAtual.isEmpty()) {
-            for (int i = 0; i < listaAtual.size(); i++) {
-                if (listaAtual.get(i).getId() == id) {
+        if (!orientacoes.isEmpty()) {
+            for (int i = 0; i < orientacoes.size(); i++) {
+                if (orientacoes.get(i).getId() == id) {
                     id++;
                 }
             }
         }
 
-        List<Orientacao> listaNova = (listaAtual == null) ? new ArrayList<>() : new ArrayList<>(listaAtual);
+        orientacoes.add(new Orientacao(id, title, descricao));
 
-        listaNova.add(new Orientacao(id, title, descricao));
+        doc.setOrientacoes(orientacoes);
 
-        documento.setOrientacoes(listaNova);
-
-        return editarDocument(documento);
+        repository.salvar(doc);
 
     }
 
-    public boolean editarOrientacao(Long id, String title, String content) {
+    public void editarOrientacao(Long id, String title, String content) {
 
         List<Orientacao> listaAtual = documento.getOrientacoes();
 
@@ -103,23 +93,20 @@ public class DocumentoService {
                     break;
                 }
             }
-        } else {
-            return false;
         }
         documento.setOrientacoes(listaAtual);
 
-        return editarDocument(documento);
+        editarDocument(documento);
 
     }
 
 
-    public boolean deletarOrientacao(long id) {
-
-        List<Orientacao> listaAtual = documento.getOrientacoes();
+    public boolean deletarOrientacao(Documento doc,long id) {
+        List<Orientacao> orientacoes = new ArrayList<>(doc.getOrientacoes());
         int encontrado = -1;
-        if (!listaAtual.isEmpty()) {
-            for (int i = 0; i < listaAtual.size(); i++) {
-                if (listaAtual.get(i).getId() == id) {
+        if (!orientacoes.isEmpty()) {
+            for (int i = 0; i < orientacoes.size(); i++) {
+                if (orientacoes.get(i).getId() == id) {
                     encontrado = i;
                     break;
                 }
@@ -132,11 +119,12 @@ public class DocumentoService {
             return false;
         }
 
-        List<Orientacao> listaNova = new ArrayList<>(listaAtual);
 
-        listaNova.remove(listaNova.get(encontrado));
-        documento.setOrientacoes(listaNova);
 
-        return editarDocument(documento);
+        orientacoes.remove(orientacoes.get(encontrado));
+        doc.setOrientacoes(orientacoes);
+
+        editarDocument(doc);
+        return true;
     }
 }

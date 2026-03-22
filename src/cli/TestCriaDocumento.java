@@ -43,9 +43,10 @@ void main() {
                 break;
             case 3:
                 seletorDocumento = Integer.parseInt(readln("Qual documento deseja selecionar?\n"));
-                var document = service.buscarDocumento(listaDocumentos[seletorDocumento - 1]);
+                var documento = service.buscarDocumento(listaDocumentos[seletorDocumento - 1]);
                 System.out.println("Documento Selecionado");
-                System.out.println(service);
+                System.out.println(documento);
+                String nomeDoc = documento.getNome();
                 seletorNumericoOrientacao = -1;
                 while (seletorNumericoOrientacao != 0) {
                     System.out.println("0 - para sair do documento");
@@ -57,8 +58,9 @@ void main() {
 
                     seletorNumericoOrientacao = Integer.parseInt(readln("Selecione uma opção"));
 
-                    String nome = null;
+                    String titulo = null;
                     String conteudo = null;
+
                     long id;
 
                     switch (seletorNumericoOrientacao) {
@@ -67,7 +69,7 @@ void main() {
                             break;
 
                         case 1:
-                            List<Orientacao> listaOrientacoes = service.listarOrientacoes();
+                            List<Orientacao> listaOrientacoes = service.listarOrientacoes(documento);
 
                             if (!listaOrientacoes.isEmpty()) {
                                 for (int i = 0; i < listaOrientacoes.size(); i++) {
@@ -80,34 +82,29 @@ void main() {
                             break;
 
                         case 2:
-                            nome = readln("Digite o titulo da orientação:\n");
+                            titulo = readln("Digite o titulo da orientação:\n");
                             conteudo = readln("Digite a descrição:\n");
 
-                            if (service.incluirOrientacao(nome, conteudo)) {
-                                System.out.println("Documento atualizado...");
-                            } else {
-                                System.out.println("!!! Erro ao salvar !!!");
-                            }
+                            service.incluirOrientacao(nomeDoc, titulo, conteudo);
+                            System.out.println("Documento atualizado...");
 
                             break;
 
                         case 3:
                             id = Long.parseLong(readln("Qual item deseja editar?\n"));
-                            nome = readln("Digite o titulo da orientação:\n");
+                            titulo = readln("Digite o titulo da orientação:\n");
                             conteudo = readln("Digite a descrição:\n");
 
-                            if (service.editarOrientacao(id, nome, conteudo)) {
-                                System.out.println("Documento atualizado...");
-                            } else {
-                                System.out.println("!!! Erro ao salvar !!!");
-                            }
+                            service.editarOrientacao(id, titulo, conteudo);
+                            System.out.println("Documento atualizado...");
+
 
                             break;
 
                         case 4:
                             id = Long.parseLong(readln("Qual item deseja editar?\n"));
 
-                            if (service.deletarOrientacao(id)) {
+                            if (service.deletarOrientacao(documento, id)) {
                                 System.out.println("Item removido com sucesso...");
                             } else {
                                 System.out.println("!!! Erro ao Deletar !!!");
@@ -115,11 +112,12 @@ void main() {
                             break;
 
                         case 5:
-                            if (service.deletarDocumento(service.buscarDocumento().getDocumentoNome() + ".json")) {
+                            if (service.deletarDocumento(service.buscarDocumento().getNome() + ".json")) {
                                 System.out.print("Item removido com sucesso");
                             } else {
                                 System.out.println("Erro ao deletar");
                             }
+                            break;
                         default:
                             System.out.println("!!! Valor invalido !!!");
                             break;

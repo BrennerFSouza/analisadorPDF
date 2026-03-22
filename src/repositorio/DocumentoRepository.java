@@ -26,15 +26,6 @@ public class DocumentoRepository {
         return gson.fromJson(textDocument, documentoClass);
     }
 
-    public void salvarDocumento(String s, String json){
-        try(FileWriter writer = new FileWriter(s)){
-            writer.write(json);
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public void deletarDocumento(String nome) {
         try {
             Files.delete(Path.of(nome));
@@ -46,6 +37,26 @@ public class DocumentoRepository {
     public String lerDocumento(String nome) {
         try{
             return Files.readString(Path.of(nome));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Documento buscarPorNome(String nome) {
+        try{
+            if (!nome.contains(".json")){nome += ".json";}
+            String json = Files.readString(Path.of(nome));
+            return gson.fromJson(json, Documento.class);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void salvar(Documento doc) {
+        try(FileWriter writer = new FileWriter(doc.getNome() + ".json")){
+            String json = gson.toJson(doc);
+            writer.write(json);
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

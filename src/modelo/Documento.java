@@ -26,7 +26,7 @@ public class Documento {
         this.sourceId = sourceId;
     }
 
-    public String getDocumentoNome() {
+    public String getNome() {
         return nomeDocumento;
     }
 
