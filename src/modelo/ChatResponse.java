@@ -1,4 +1,4 @@
-package Chatpdf;
+package modelo;
 
 public class ChatResponse {
     private String content;

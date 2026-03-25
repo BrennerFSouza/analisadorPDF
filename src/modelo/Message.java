@@ -1,4 +1,4 @@
-package Chatpdf;
+package modelo;
 
 public class Message {
     private String role;

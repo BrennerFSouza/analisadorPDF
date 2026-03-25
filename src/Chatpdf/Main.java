@@ -1,4 +1,8 @@
-import Chatpdf.*;
+import configuracao.ApiConfig;
+import modelo.ChatRequest;
+import modelo.ChatResponse;
+import modelo.Message;
+import servico.ChatPdfService;
 
 void main() {
 
