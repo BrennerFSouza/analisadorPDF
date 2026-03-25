@@ -14,10 +14,6 @@ import java.net.http.HttpResponse;
 public class ChatPdfService {
     private ChatPdfRepository chatPdfRepository = new ChatPdfRepository();
 
-
-    //CONSTRUCTOR
-
-
     //METODS
     public ChatResponse enviarPergunta(ChatRequest request) {
         return chatPdfRepository.enviarPergunta(request);

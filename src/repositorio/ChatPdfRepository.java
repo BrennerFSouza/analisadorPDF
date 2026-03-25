@@ -5,15 +5,21 @@ import configuracao.ApiConfig;
 import modelo.ChatRequest;
 import modelo.ChatResponse;
 
+import java.net.URI;
 import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
 public class ChatPdfRepository {
     private final HttpClient client;
-    private final Gson gson = new Gson();
-    private final String apiKey = ApiConfig.obterApiKey();
+    private final Gson gson;
+    private final String apiKey;
 
+    //CONSTRUCTOR
     public ChatPdfRepository() {
-        this.client = client;
+        this.client = HttpClient.newHttpClient();
+        this.gson = new Gson();
+        this.apiKey = ApiConfig.obterApiKey();
     }
 
     public ChatResponse enviarPergunta(ChatRequest request) {
@@ -43,5 +49,4 @@ public class ChatPdfRepository {
         }
     }
 
-    public
 }
