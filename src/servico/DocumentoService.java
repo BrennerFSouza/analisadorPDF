@@ -26,9 +26,14 @@ public class DocumentoService {
         repository.salvar(documento);
     }
 
-    public void editarDocument(Documento doc) {
+    public void editarDocumento(Documento doc) {
         repository.salvar(doc);
 
+    }
+
+    public void atualizarSorceID(Documento doc, String sorceId) {
+        doc.setSourceId(sorceId);
+        repository.salvar(doc);
     }
 
     public Documento buscarDocumento(String nome) {
@@ -85,7 +90,7 @@ public class DocumentoService {
         }
         doc.setOrientacoes(orientacoes);
 
-        editarDocument(doc);
+        editarDocumento(doc);
 
     }
 
@@ -112,7 +117,7 @@ public class DocumentoService {
         orientacoes.remove(orientacoes.get(encontrado));
         doc.setOrientacoes(orientacoes);
 
-        editarDocument(doc);
+        editarDocumento(doc);
         return true;
     }
 }
