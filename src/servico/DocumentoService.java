@@ -32,8 +32,6 @@ public class DocumentoService {
         doc.setDataAlteracao(new Date());
         doc.setTemAlteracao(true);
         repository.salvar(doc);
-
-
     }
 
     public void atualizarSorceID(Documento doc, String sorceId) {

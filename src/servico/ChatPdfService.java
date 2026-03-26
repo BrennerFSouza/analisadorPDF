@@ -11,6 +11,9 @@ public class ChatPdfService {
 
     //METODS
     public ChatResponse enviarPergunta(Documento doc, String textoPergunta) {
+        if(doc.isTemAlteracao()){
+            atualizarDocumentoSistema(doc);
+        }
 
         Message pergunta = new Message("user", textoPergunta);
         String sourceId = doc.getSourceId();
@@ -19,5 +22,11 @@ public class ChatPdfService {
                 new Message[]{pergunta}
         );
         return chatPdfRepository.enviarPergunta(pedido);
+    }
+
+    private void atualizarDocumentoSistema(Documento doc){
+        DocumentoService documentoService = new DocumentoService();
+        chatPdfRepository.subirDocumento(doc.getOrientacoes());
+        documentoService.atualizarSorceID(doc, doc.getSourceId());
     }
 }
