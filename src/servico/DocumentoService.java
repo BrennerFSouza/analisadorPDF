@@ -5,7 +5,9 @@ import modelo.Orientacao;
 import repositorio.DocumentoRepository;
 
 import java.io.File;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class DocumentoService {
@@ -27,7 +29,10 @@ public class DocumentoService {
     }
 
     public void editarDocumento(Documento doc) {
+        doc.setDataAlteracao(new Date());
+        doc.setTemAlteracao(true);
         repository.salvar(doc);
+
 
     }
 
