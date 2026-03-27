@@ -35,8 +35,8 @@ public class ChatPdfService {
         documentoService.atualizarSorceID(doc, doc.getSourceId());
     }
 
-    public byte[] gerarPdfEmMemoria(List<Orientacao> orientacoes) {
-        byte[] pdfBytes = chatPdfRepository.gerarPDF(orientacoes);
+    public byte[] gerarPdfEmMemoria(String nomeDoc,List<Orientacao> orientacoes) {
+        byte[] pdfBytes = chatPdfRepository.gerarPDF(nomeDoc, orientacoes);
         try (FileOutputStream fos = new FileOutputStream("resultado_teste.pdf")) {
             fos.write(pdfBytes);
             fos.flush();

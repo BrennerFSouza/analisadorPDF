@@ -93,7 +93,7 @@ public class ChatPdfRepository {
     }
 
 
-    public byte[] gerarPDF(List<Orientacao> orientacoes) {
+    public byte[] gerarPDF(String nomeDoc, List<Orientacao> orientacoes) {
         String jsonString = gson.toJson(orientacoes);
         ByteArrayOutputStream out = new ByteArrayOutputStream();
 
@@ -105,7 +105,7 @@ public class ChatPdfRepository {
             document.open();
 
             // 3. Adicionamos o conteúdo
-            document.add(new Paragraph("Relatório de Dados JSON"));
+            document.add(new Paragraph(nomeDoc));
             document.add(new Paragraph(" ")); // Espaço
             document.add(new Paragraph(jsonString));
 
