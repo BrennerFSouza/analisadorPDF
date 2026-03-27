@@ -13,6 +13,8 @@ void main() {
     ChatPdfService chatPdfService = new ChatPdfService();
 
 
+
+
     int seletorNumerico = -1;
     int seletorDocumento = -1;
     int seletorNumericoOrientacao = -1;
@@ -52,6 +54,7 @@ void main() {
                 System.out.println("Documento Selecionado");
                 System.out.println(documento);
                 String nomeDoc = documento.getNome();
+                chatPdfService.gerarPdfEmMemoria(documento.getOrientacoes());
                 seletorNumericoOrientacao = -1;
                 while (seletorNumericoOrientacao != 0) {
                     System.out.println("0 - para sair do documento");
@@ -104,6 +107,7 @@ void main() {
 
                             documentoservice.editarOrientacao(documento, id, titulo, conteudo);
                             System.out.println("Documento atualizado...");
+
 
 
                             break;
