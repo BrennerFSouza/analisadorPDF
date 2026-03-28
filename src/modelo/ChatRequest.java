@@ -13,6 +13,9 @@ public class ChatRequest {
         this.sourceId = sourceId;
         this.messages = messages;
     }
+    public ChatRequest(String sourceId) {
+        this.sourceId = sourceId;
+    }
 
     //METODS
 

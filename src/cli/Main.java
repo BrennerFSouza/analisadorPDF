@@ -122,11 +122,9 @@ void main() {
                             break;
 
                         case 5:
-                            if (documentoservice.deletarDocumento(documento)) {
-                                System.out.print("Item removido com sucesso");
-                            } else {
-                                System.out.println("Erro ao deletar");
-                            }
+                            documentoservice.deletarDocumento(documento);
+                            System.out.print("Item removido com sucesso");
+
                             break;
 
                         case 6:

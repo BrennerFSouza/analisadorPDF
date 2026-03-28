@@ -59,5 +59,6 @@ public class DocumentoRepository {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        return doc;
     }
 }

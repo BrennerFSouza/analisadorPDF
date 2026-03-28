@@ -25,9 +25,15 @@ public class ChatPdfService {
     private Documento atualizarDocumentoSistema(Documento doc){
         DocumentoService documentoService = new DocumentoService();
         byte[] pdfBytes = pdfService.gerarPDF(doc);
+        deletarDocumento(doc);
         ChatResponse response = chatPdfRepository.subirDocumento(pdfBytes, doc.getNome());
         System.out.println(response.getSourceId());
+
         return documentoService.atualizarSorceID(doc, response.getSourceId());
+    }
+
+    public void deletarDocumento(Documento doc) {
+        chatPdfRepository.deletarDocumento(doc);
     }
 
     public byte[] gerarPdf(Documento doc) {
@@ -36,4 +42,6 @@ public class ChatPdfService {
         return pdfBytes;
 
     }
+
+
 }

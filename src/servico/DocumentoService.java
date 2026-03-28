@@ -2,6 +2,7 @@ package servico;
 
 import modelo.Documento;
 import modelo.Orientacao;
+import repositorio.ChatPdfRepository;
 import repositorio.DocumentoRepository;
 
 import java.io.File;
@@ -12,6 +13,7 @@ import java.util.List;
 
 public class DocumentoService {
     private final DocumentoRepository repository = new DocumentoRepository();
+    private final ChatPdfService chatPdfService = new ChatPdfService();
 
     public DocumentoService() {
     }
@@ -48,9 +50,10 @@ public class DocumentoService {
 
     }
 
-    public boolean deletarDocumento(Documento doc) {
+    public void deletarDocumento(Documento doc) {
         repository.deletarDocumento(doc);
-        return true;
+        chatPdfService.deletarDocumento(doc);
+
     }
 
     public List<Orientacao> listarOrientacoes(Documento doc) {
