@@ -7,7 +7,10 @@ import modelo.ChatResponse;
 import modelo.Documento;
 import modelo.Orientacao;
 import org.openpdf.text.Document;
+import org.openpdf.text.Element;
+import org.openpdf.text.Font;
 import org.openpdf.text.Paragraph;
+import org.openpdf.text.pdf.BaseFont;
 import org.openpdf.text.pdf.PdfWriter;
 
 import java.io.ByteArrayOutputStream;
@@ -15,9 +18,8 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.HashMap;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.Map;
 
 public class ChatPdfRepository {
     private final HttpClient client;
@@ -94,28 +96,52 @@ public class ChatPdfRepository {
 
 
     public byte[] gerarPDF(String nomeDoc, List<Orientacao> orientacoes) {
-        String jsonString = gson.toJson(orientacoes);
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-
-        Document document = new Document();
         try {
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            String caminhoFonte = "fonts/arial.ttf";
+            BaseFont bf = BaseFont.createFont(
+                    ChatPdfRepository.class.getClassLoader().getResource(caminhoFonte).toString(),
+                    BaseFont.IDENTITY_H,
+                    BaseFont.EMBEDDED
+            );
+            Font fonteTituloDoc = new Font(bf, 16, Font.BOLD);
+            Font fonteTitulo = new Font(bf, 12, Font.BOLD);
+            Font fonteCorpo = new Font(bf, 10, Font.NORMAL);
+
+            Document document = new Document();
+
             // 2. O PdfWriter vincula o documento ao stream de memória
             PdfWriter.getInstance(document, out);
 
             document.open();
 
             // 3. Adicionamos o conteúdo
-            document.add(new Paragraph(nomeDoc));
-            document.add(new Paragraph(" ")); // Espaço
-            document.add(new Paragraph(jsonString));
+            Paragraph tituloDoc = new Paragraph(nomeDoc, fonteTituloDoc); // <--- Fonte aqui
+            tituloDoc.setAlignment(Element.ALIGN_CENTER);
+            tituloDoc.setSpacingAfter(30f);
+            document.add(tituloDoc);
+
+            for (Orientacao orientacao : orientacoes) {
+
+                String tituloLimpo = new String(orientacao.getTitle().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+                String conteudoLimpo = new String(orientacao.getContent().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+
+                Paragraph tituloOrientacao = new Paragraph("ID: " + orientacao.getId() + " - " + tituloLimpo, fonteTitulo);
+                tituloOrientacao.setSpacingBefore(15f);
+                document.add(tituloOrientacao);
+
+                Paragraph corpoOrientacao = new Paragraph(conteudoLimpo, fonteCorpo);
+                corpoOrientacao.setSpacingBefore(5f);   // Pequeno espaço entre o título e o texto dele
+                corpoOrientacao.setSpacingAfter(10f);
+                document.add(corpoOrientacao);
+            }
 
             document.close();
+            return out.toByteArray();
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
-        // 4. Retorna o PDF como um array de bytes
-        return out.toByteArray();
     }
 }
 
