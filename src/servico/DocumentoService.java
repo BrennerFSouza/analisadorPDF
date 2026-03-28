@@ -84,18 +84,21 @@ public class DocumentoService {
 
         List<Orientacao> orientacoes = doc.getOrientacoes();
 
-        if (!orientacoes.isEmpty()) {
-            for (int i = 0; i < orientacoes.size(); i++) {
-                if (orientacoes.get(i).getId() == id) {
-                    orientacoes.get(i).setTitle(title);
-                    orientacoes.get(i).setContent(content);
-                    break;
-                }
+        if (orientacoes.isEmpty()) {
+            return doc;
+        }
+
+        for (int i = 0; i < orientacoes.size(); i++) {
+            if (orientacoes.get(i).getId() == id) {
+                orientacoes.get(i).setTitle(title);
+                orientacoes.get(i).setContent(content);
+                break;
             }
         }
         doc.setOrientacoes(orientacoes);
 
         editarDocumento(doc);
+
 
         return doc;
 
