@@ -50,7 +50,7 @@ public class DocumentoRepository {
         }
     }
 
-    public void salvar(Documento doc) {
+    public Documento salvar(Documento doc) {
         try (FileWriter writer = new FileWriter(doc.getNome() + ".json")) {
             String json = gson.toJson(doc);
             writer.write(json);

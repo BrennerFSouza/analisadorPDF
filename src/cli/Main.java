@@ -94,7 +94,7 @@ void main() {
                             titulo = readln("Digite o titulo da orientação:\n");
                             conteudo = readln("Digite a descrição:\n");
 
-                            documentoservice.incluirOrientacao(nomeDoc, titulo, conteudo);
+                            documento = documentoservice.incluirOrientacao(documento, titulo, conteudo);
                             System.out.println("Documento atualizado...");
 
                             break;
@@ -104,7 +104,7 @@ void main() {
                             titulo = readln("Digite o titulo da orientação:\n");
                             conteudo = readln("Digite a descrição:\n");
 
-                            documentoservice.editarOrientacao(documento, id, titulo, conteudo);
+                            documento = documentoservice.editarOrientacao(documento, id, titulo, conteudo);
                             System.out.println("Documento atualizado...");
 
 

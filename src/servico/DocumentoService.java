@@ -23,29 +23,28 @@ public class DocumentoService {
 
     }
 
-    public void criarDocumento(String nome) {
+    public Documento criarDocumento(String nome) {
         var documento = new Documento(nome);
-        repository.salvar(documento);
+        return repository.salvar(documento);
     }
 
-    public void editarDocumento(Documento doc) {
+    public Documento editarDocumento(Documento doc) {
         doc.setDataAlteracao(new Date());
         doc.setTemAlteracao(true);
-        repository.salvar(doc);
+        return repository.salvar(doc);
+
     }
 
     public Documento atualizarSorceID(Documento doc, String sorceId) {
         doc.setSourceId(sorceId);
         doc.setTemAlteracao(false);
-        repository.salvar(doc);
-        return doc;
+        return repository.salvar(doc);
     }
 
     public Documento buscarDocumento(String nome) {
 
         String textDocument = repository.lerDocumento(nome);
         return repository.carregarDocumento(textDocument, Documento.class);
-
 
     }
 
@@ -58,9 +57,8 @@ public class DocumentoService {
         return doc.getOrientacoes();
     }
 
-    public void incluirOrientacao(String nomeDoc, String title, String descricao) {
+    public Documento incluirOrientacao(Documento doc, String title, String descricao) {
 
-        Documento doc = repository.buscarPorNome(nomeDoc);
         List<Orientacao> orientacoes = new ArrayList<>(doc.getOrientacoes());
         long id = 1;
 
@@ -75,12 +73,14 @@ public class DocumentoService {
         orientacoes.add(new Orientacao(id, title, descricao));
 
         doc.setOrientacoes(orientacoes);
+        doc.setTemAlteracao(true);
 
         repository.salvar(doc);
+        return doc;
 
     }
 
-    public void editarOrientacao(Documento doc, Long id, String title, String content) {
+    public Documento editarOrientacao(Documento doc, Long id, String title, String content) {
 
         List<Orientacao> orientacoes = doc.getOrientacoes();
 
@@ -96,6 +96,8 @@ public class DocumentoService {
         doc.setOrientacoes(orientacoes);
 
         editarDocumento(doc);
+
+        return doc;
 
     }
 
