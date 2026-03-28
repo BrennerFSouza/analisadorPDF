@@ -1,4 +1,3 @@
-import configuracao.ApiConfig;
 import modelo.ChatResponse;
 import modelo.Documento;
 import modelo.Orientacao;
@@ -54,7 +53,7 @@ void main() {
                 System.out.println("Documento Selecionado");
                 System.out.println(documento);
                 String nomeDoc = documento.getNome();
-                chatPdfService.gerarPdfEmMemoria(documento.getNome(),documento.getOrientacoes());
+                chatPdfService.gerarPdfEmMemoria(documento);
 
                 seletorNumericoOrientacao = -1;
                 while (seletorNumericoOrientacao != 0) {

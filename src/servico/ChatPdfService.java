@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class ChatPdfService {
+    private PDFService pdfService = new PDFService();
     private ChatPdfRepository chatPdfRepository = new ChatPdfRepository();
 
     //METODS
@@ -35,16 +36,9 @@ public class ChatPdfService {
         documentoService.atualizarSorceID(doc, doc.getSourceId());
     }
 
-    public byte[] gerarPdfEmMemoria(String nomeDoc,List<Orientacao> orientacoes) {
-        byte[] pdfBytes = chatPdfRepository.gerarPDF(nomeDoc, orientacoes);
-        try (FileOutputStream fos = new FileOutputStream("resultado_teste.pdf")) {
-            fos.write(pdfBytes);
-            fos.flush();
-            System.out.println("PDF gerado com sucesso! Verifique o arquivo: resultado_teste.pdf");
-        } catch (IOException e) {
-            System.err.println("Erro ao salvar o arquivo: " + e.getMessage());
-        }
-
+    public byte[] gerarPdfEmMemoria(Documento doc) {
+        byte[] pdfBytes = pdfService.gerarPDF(doc);
+        pdfService.gerarDocumentoPDF(pdfBytes);
         return pdfBytes;
 
     }

@@ -95,54 +95,7 @@ public class ChatPdfRepository {
     }
 
 
-    public byte[] gerarPDF(String nomeDoc, List<Orientacao> orientacoes) {
-        try {
-            ByteArrayOutputStream out = new ByteArrayOutputStream();
-            String caminhoFonte = "fonts/arial.ttf";
-            BaseFont bf = BaseFont.createFont(
-                    ChatPdfRepository.class.getClassLoader().getResource(caminhoFonte).toString(),
-                    BaseFont.IDENTITY_H,
-                    BaseFont.EMBEDDED
-            );
-            Font fonteTituloDoc = new Font(bf, 16, Font.BOLD);
-            Font fonteTitulo = new Font(bf, 12, Font.BOLD);
-            Font fonteCorpo = new Font(bf, 10, Font.NORMAL);
 
-            Document document = new Document();
-
-            // 2. O PdfWriter vincula o documento ao stream de memória
-            PdfWriter.getInstance(document, out);
-
-            document.open();
-
-            // 3. Adicionamos o conteúdo
-            Paragraph tituloDoc = new Paragraph(nomeDoc, fonteTituloDoc); // <--- Fonte aqui
-            tituloDoc.setAlignment(Element.ALIGN_CENTER);
-            tituloDoc.setSpacingAfter(30f);
-            document.add(tituloDoc);
-
-            for (Orientacao orientacao : orientacoes) {
-
-                String tituloLimpo = new String(orientacao.getTitle().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
-                String conteudoLimpo = new String(orientacao.getContent().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
-
-                Paragraph tituloOrientacao = new Paragraph("ID: " + orientacao.getId() + " - " + tituloLimpo, fonteTitulo);
-                tituloOrientacao.setSpacingBefore(15f);
-                document.add(tituloOrientacao);
-
-                Paragraph corpoOrientacao = new Paragraph(conteudoLimpo, fonteCorpo);
-                corpoOrientacao.setSpacingBefore(5f);   // Pequeno espaço entre o título e o texto dele
-                corpoOrientacao.setSpacingAfter(10f);
-                document.add(corpoOrientacao);
-            }
-
-            document.close();
-            return out.toByteArray();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-    }
 }
 
 
