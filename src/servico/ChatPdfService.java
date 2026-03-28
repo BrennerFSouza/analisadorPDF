@@ -1,15 +1,7 @@
 package servico;
 
 import modelo.*;
-import org.openpdf.text.Document;
-import org.openpdf.text.Paragraph;
-import org.openpdf.text.pdf.PdfWriter;
 import repositorio.ChatPdfRepository;
-
-import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.List;
 
 public class ChatPdfService {
     private PDFService pdfService = new PDFService();
@@ -18,7 +10,7 @@ public class ChatPdfService {
     //METODS
     public ChatResponse enviarPergunta(Documento doc, String textoPergunta) {
         if(doc.isTemAlteracao()){
-            atualizarDocumentoSistema(doc);
+            doc = atualizarDocumentoSistema(doc);
         }
 
         Message pergunta = new Message("user", textoPergunta);
@@ -30,13 +22,15 @@ public class ChatPdfService {
         return chatPdfRepository.enviarPergunta(pedido);
     }
 
-    private void atualizarDocumentoSistema(Documento doc){
+    private Documento atualizarDocumentoSistema(Documento doc){
         DocumentoService documentoService = new DocumentoService();
-        Documento novoDoc = chatPdfRepository.subirDocumento(doc.getOrientacoes());
-        documentoService.atualizarSorceID(doc, doc.getSourceId());
+        byte[] pdfBytes = pdfService.gerarPDF(doc);
+        ChatResponse response = chatPdfRepository.subirDocumento(pdfBytes, doc.getNome());
+        System.out.println(response.getSourceId());
+        return documentoService.atualizarSorceID(doc, response.getSourceId());
     }
 
-    public byte[] gerarPdfEmMemoria(Documento doc) {
+    public byte[] gerarPdf(Documento doc) {
         byte[] pdfBytes = pdfService.gerarPDF(doc);
         pdfService.gerarDocumentoPDF(pdfBytes);
         return pdfBytes;

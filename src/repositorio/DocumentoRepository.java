@@ -54,6 +54,7 @@ public class DocumentoRepository {
         try (FileWriter writer = new FileWriter(doc.getNome() + ".json")) {
             String json = gson.toJson(doc);
             writer.write(json);
+            writer.flush();
 
         } catch (IOException e) {
             throw new RuntimeException(e);

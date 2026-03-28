@@ -34,9 +34,11 @@ public class DocumentoService {
         repository.salvar(doc);
     }
 
-    public void atualizarSorceID(Documento doc, String sorceId) {
+    public Documento atualizarSorceID(Documento doc, String sorceId) {
         doc.setSourceId(sorceId);
+        doc.setTemAlteracao(false);
         repository.salvar(doc);
+        return doc;
     }
 
     public Documento buscarDocumento(String nome) {

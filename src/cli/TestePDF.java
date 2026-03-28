@@ -13,6 +13,6 @@ public class TestePDF {
 
         Documento documento = documentoService.buscarDocumento("Documento Teste.json");
         System.out.println(documento);
-        chatPdfService.gerarPdfEmMemoria(documento);
+        chatPdfService.gerarPdf(documento);
     }
 }

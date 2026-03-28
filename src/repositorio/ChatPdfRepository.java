@@ -4,22 +4,18 @@ import com.google.gson.Gson;
 import configuracao.ApiConfig;
 import modelo.ChatRequest;
 import modelo.ChatResponse;
-import modelo.Documento;
-import modelo.Orientacao;
-import org.openpdf.text.Document;
-import org.openpdf.text.Element;
-import org.openpdf.text.Font;
-import org.openpdf.text.Paragraph;
-import org.openpdf.text.pdf.BaseFont;
-import org.openpdf.text.pdf.PdfWriter;
+import org.apache.hc.client5.http.classic.methods.HttpPost;
+import org.apache.hc.client5.http.entity.mime.MultipartEntityBuilder;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.core5.http.ContentType;
+import org.apache.hc.core5.http.io.entity.EntityUtils;
 
-import java.io.ByteArrayOutputStream;
+import java.io.Closeable;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.nio.charset.StandardCharsets;
-import java.util.List;
 
 public class ChatPdfRepository {
     private final HttpClient client;
@@ -61,35 +57,38 @@ public class ChatPdfRepository {
     }
 
 
-    public Documento subirDocumento(List<Orientacao> orientacoes) {
-        try {
-            return null;
-            /*
-            String jsonRequest = gson.toJson(orientacoes);
-            Map<String, String> data = new HashMap<>();
-            data.put("url", jsonRequest);
+    public ChatResponse subirDocumento(byte[] pdfBytes, String documentoNome) {
+        String nomeFinal = documentoNome.endsWith(".pdf") ? documentoNome : documentoNome + ".pdf";
 
-            HttpRequest httpRequest = HttpRequest.newBuilder()
-                    .uri(URI.create(ApiConfig.URL_BASE + "/sources/add-file"))
-                    .header("x-api-key", apiKey)
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(jsonRequest))
-                    .build();
+        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
+            HttpPost uploadFile = new HttpPost(ApiConfig.URL_BASE + "/sources/add-file");
+            uploadFile.addHeader("x-api-key", apiKey);
 
-            HttpResponse<String> response = client.send(httpRequest,
-                    HttpResponse.BodyHandlers.ofString());
+            MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+            builder.addBinaryBody(
+                    "file",
+                    pdfBytes,
+                    ContentType.APPLICATION_PDF,
+                    nomeFinal
+            );
+
+            uploadFile.setEntity(builder.build());
 
 
-            if (response.statusCode() != 200) {
-                System.err.println("❌ API ERRO " + response.statusCode() + " - " + response.body());
-                return null;
-            }
+            return httpClient.execute(uploadFile, response -> {
+                String responseBody = EntityUtils.toString(response.getEntity());
 
-            return gson.fromJson(response.body(), Documento.class);
+                if (response.getCode() >= 200 && response.getCode() < 300) {
+                    System.out.println(responseBody);
+                    return gson.fromJson(responseBody, ChatResponse.class);
+                } else {
+                    System.err.println("Erro API: " + response.getCode() + " - " + responseBody);
+                    return null;
+                }
+            });
 
-             */
         } catch (Exception e) {
-            System.err.println("❌ ERRO: " + e.getMessage());
+            System.err.println("❌ ERRO de conexão ou parsing: " + e.getMessage());
             return null;
         }
     }

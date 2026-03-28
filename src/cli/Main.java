@@ -53,7 +53,6 @@ void main() {
                 System.out.println("Documento Selecionado");
                 System.out.println(documento);
                 String nomeDoc = documento.getNome();
-                chatPdfService.gerarPdfEmMemoria(documento);
 
                 seletorNumericoOrientacao = -1;
                 while (seletorNumericoOrientacao != 0) {
