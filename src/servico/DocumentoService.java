@@ -26,8 +26,10 @@ public class DocumentoService {
     }
 
     public Documento criarDocumento(String nome) {
-        var documento = new Documento(nome);
-        return repository.salvar(documento);
+        var doc = new Documento(nome);
+        doc.setDataAlteracao(new Date());
+        doc.setTemAlteracao(true);
+        return repository.salvar(doc);
     }
 
     public Documento editarDocumento(Documento doc) {

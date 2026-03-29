@@ -27,7 +27,7 @@ public class ChatPdfService {
         byte[] pdfBytes = pdfService.gerarPDF(doc);
         deletarDocumento(doc);
         ChatResponse response = chatPdfRepository.subirDocumento(pdfBytes, doc.getNome());
-        System.out.println(response.getSourceId());
+
 
         return documentoService.atualizarSorceID(doc, response.getSourceId());
     }
