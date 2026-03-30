@@ -25,7 +25,9 @@ public class ChatPdfService {
     private Documento atualizarDocumentoSistema(Documento doc){
         DocumentoService documentoService = new DocumentoService();
         byte[] pdfBytes = pdfService.gerarPDF(doc);
-        deletarDocumento(doc);
+        if (doc.getSourceId() != null){
+            deletarDocumento(doc);
+        }
         ChatResponse response = chatPdfRepository.subirDocumento(pdfBytes, doc.getNome());
 
 
