@@ -99,6 +99,9 @@ public class ChatPdfRepository {
 
     public void deletarDocumento(Documento doc) {
         try {
+            if (doc.getSourceId() == null){
+                return;
+            }
             Map<String, List<String>> payload = Collections.singletonMap(
                     "sources",
                     Collections.singletonList(doc.getSourceId())
