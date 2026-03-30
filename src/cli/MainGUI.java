@@ -32,15 +32,63 @@ public class MainGUI extends JFrame {
     private Documento documentoSelecionado = null;
 
     public static void main(String[] args) {
+        // Aplica o tema escuro antes de iniciar qualquer componente visual
+        aplicarTemaEscuro();
+
         // Inicia a interface gráfica de forma segura
         SwingUtilities.invokeLater(() -> {
             new MainGUI().setVisible(true);
         });
     }
 
+    // --- MAGIA DO DARK MODE AQUI ---
+    private static void aplicarTemaEscuro() {
+        try {
+            // Tenta usar o Nimbus LookAndFeel (nativo, mas mais bonito que o padrão Metal)
+            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+
+            // Define a paleta de cores do Dark Mode
+            Color fundoBase = new Color(43, 43, 43);       // Cinza bem escuro para o fundo da janela
+            Color fundoPaineis = new Color(60, 63, 65);    // Cinza médio para listas e áreas de texto
+            Color textoClaro = new Color(187, 187, 187);   // Texto cinza claro (não branco puro para não cansar a vista)
+            Color textoBranco = Color.WHITE;               // Texto para itens selecionados
+            Color destaqueAzul = new Color(75, 110, 175);  // Azul suave para botões e seleções
+
+            // Injeta as cores no UIManager
+            UIManager.put("control", fundoBase);
+            UIManager.put("info", fundoBase);
+            UIManager.put("nimbusBase", fundoBase);
+            UIManager.put("nimbusAlertYellow", new Color(255, 220, 35));
+            UIManager.put("nimbusDisabledText", new Color(128, 128, 128));
+            UIManager.put("nimbusFocus", destaqueAzul);
+            UIManager.put("nimbusGreen", new Color(176, 179, 50));
+            UIManager.put("nimbusInfoBlue", new Color(66, 139, 221));
+            UIManager.put("nimbusLightBackground", fundoPaineis);
+            UIManager.put("nimbusOrange", new Color(191, 98, 4));
+            UIManager.put("nimbusRed", new Color(169, 46, 34));
+            UIManager.put("nimbusSelectedText", textoBranco);
+            UIManager.put("nimbusSelectionBackground", destaqueAzul);
+            UIManager.put("text", textoClaro);
+            UIManager.put("TitledBorder.titleColor", textoClaro); // Cor dos títulos das bordas
+            UIManager.put("Label.foreground", textoClaro); // Cor dos textos (labels)
+
+            // Ajusta a cor das caixas de diálogo (JOptionPane)
+            UIManager.put("OptionPane.background", fundoBase);
+            UIManager.put("Panel.background", fundoBase);
+
+        } catch (Exception e) {
+            System.err.println("Não foi possível aplicar o tema escuro. Usando o padrão.");
+        }
+    }
+
     public MainGUI() {
         setTitle("Gerenciador de Documentos e IA");
-        setSize(900, 600);
+        setSize(1000, 650); // Aumentei um pouco a janela para ficar mais elegante
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null); // Centraliza na tela
         setLayout(new BorderLayout());
@@ -70,7 +118,6 @@ public class MainGUI extends JFrame {
         // --- PAINEL CENTRAL: Orientações e Ações do Documento ---
         JPanel painelCentral = new JPanel(new BorderLayout());
 
-
         // Topo do painel central (Ações do Documento)
         JPanel painelAcoesDoc = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JButton btnDeletarDoc = new JButton("Deletar Documento");
@@ -86,19 +133,12 @@ public class MainGUI extends JFrame {
         // Centro do painel central (Lista de Orientações)
         modeloListaOrientacoes = new DefaultListModel<>();
         listaVisualOrientacoes = new JList<>(modeloListaOrientacoes);
-
-        // >>> ADICIONE ESTA LINHA AQUI <<<
-        listaVisualOrientacoes.setCellRenderer(new OrientacaoRenderer());
-
-        // Centro do painel central (Lista de Orientações)
-        modeloListaOrientacoes = new DefaultListModel<>();
-        listaVisualOrientacoes = new JList<>(modeloListaOrientacoes);
         listaVisualOrientacoes.setCellRenderer(new OrientacaoRenderer());
 
         JPanel painelOrientacoes = new JPanel(new BorderLayout());
         painelOrientacoes.setBorder(BorderFactory.createTitledBorder("Orientações do Documento"));
 
-        // --- NOVO: Campo de Filtro por ID ---
+        // --- Campo de Filtro por ID ---
         JPanel painelFiltro = new JPanel(new FlowLayout(FlowLayout.LEFT));
         painelFiltro.add(new JLabel("Filtrar por ID:"));
         campoFiltroId = new JTextField(10);
@@ -110,10 +150,9 @@ public class MainGUI extends JFrame {
             public void changedUpdate(javax.swing.event.DocumentEvent e) { aplicarFiltroId(); }
         });
         painelFiltro.add(campoFiltroId);
-        painelOrientacoes.add(painelFiltro, BorderLayout.NORTH); // Coloca o filtro no topo
+        painelOrientacoes.add(painelFiltro, BorderLayout.NORTH);
 
-        painelOrientacoes.add(new JScrollPane(listaVisualOrientacoes), BorderLayout.CENTER);
-        painelOrientacoes.setBorder(BorderFactory.createTitledBorder("Orientações do Documento"));
+        // Adiciona a lista de orientações
         painelOrientacoes.add(new JScrollPane(listaVisualOrientacoes), BorderLayout.CENTER);
 
         // Botões para Orientações
@@ -136,13 +175,17 @@ public class MainGUI extends JFrame {
 
         // --- PAINEL DIREITO: Área da IA ---
         JPanel painelIA = new JPanel(new BorderLayout());
-        painelIA.setPreferredSize(new Dimension(300, 0));
+        painelIA.setPreferredSize(new Dimension(320, 0)); // Um pouquinho mais largo para melhor leitura
         painelIA.setBorder(BorderFactory.createTitledBorder("ChatPDF IA"));
 
         areaChat = new JTextArea();
         areaChat.setEditable(false);
         areaChat.setLineWrap(true);
         areaChat.setWrapStyleWord(true);
+
+        // Margem interna para o texto não colar na borda da IA
+        areaChat.setMargin(new Insets(10, 10, 10, 10));
+
         painelIA.add(new JScrollPane(areaChat), BorderLayout.CENTER);
 
         JPanel painelPergunta = new JPanel(new BorderLayout());
@@ -218,7 +261,6 @@ public class MainGUI extends JFrame {
     private void carregarOrientacoes() {
         modeloListaOrientacoes.clear();
         if (documentoSelecionado != null) {
-            // Guarda a lista original na nossa nova variável
             listaCompletaOrientacoes = documentoService.listarOrientacoes(documentoSelecionado);
             if (listaCompletaOrientacoes != null) {
                 for (Orientacao ori : listaCompletaOrientacoes) {
@@ -229,26 +271,22 @@ public class MainGUI extends JFrame {
             listaCompletaOrientacoes = null;
         }
 
-        // Limpa o campo de filtro ao trocar de documento
         if (campoFiltroId != null) {
             campoFiltroId.setText("");
         }
     }
 
-    // --- NOVO: Método que filtra a lista visual ---
     private void aplicarFiltroId() {
         if (listaCompletaOrientacoes == null) return;
 
         String idBusca = campoFiltroId.getText().trim();
-        modeloListaOrientacoes.clear(); // Limpa a tela
+        modeloListaOrientacoes.clear();
 
         if (idBusca.isEmpty()) {
-            // Se o filtro estiver vazio, mostra tudo de novo
             for (Orientacao ori : listaCompletaOrientacoes) {
                 modeloListaOrientacoes.addElement(ori);
             }
         } else {
-            // Se tiver texto, filtra verificando se o ID contém o número digitado
             for (Orientacao ori : listaCompletaOrientacoes) {
                 if (String.valueOf(ori.getId()).contains(idBusca)) {
                     modeloListaOrientacoes.addElement(ori);
@@ -257,9 +295,8 @@ public class MainGUI extends JFrame {
         }
     }
 
-    // Método auxiliar para criar uma janela com suporte a quebra de linha
     private String solicitarTextoMultilinha(String tituloDialogo, String textoInicial) {
-        JTextArea areaTexto = new JTextArea(10, 40); // 10 linhas, 40 colunas
+        JTextArea areaTexto = new JTextArea(10, 40);
         areaTexto.setLineWrap(true);
         areaTexto.setWrapStyleWord(true);
 
@@ -306,14 +343,12 @@ public class MainGUI extends JFrame {
             return;
         }
 
-        // Importante: certifique-se de que a classe Orientacao possui os métodos getTitulo() e getConteudo()
         String novoTitulo = JOptionPane.showInputDialog(this, "Novo título:", ori.getTitle());
         if (novoTitulo == null) return;
 
         String novoConteudo = solicitarTextoMultilinha("Nova descrição:", ori.getContent());
         if (novoConteudo == null || novoConteudo.trim().isEmpty()) return;
 
-        // Importante: certifique-se de que a classe Orientacao possui o método getId()
         long id = ori.getId();
         documentoSelecionado = documentoService.editarOrientacao(documentoSelecionado, id, novoTitulo, novoConteudo);
         carregarOrientacoes();
@@ -328,7 +363,7 @@ public class MainGUI extends JFrame {
 
         int confirm = JOptionPane.showConfirmDialog(this, "Deseja excluir esta orientação?", "Aviso", JOptionPane.YES_NO_OPTION);
         if (confirm == JOptionPane.YES_OPTION) {
-            long id = ori.getId(); // Certifique-se do getId()
+            long id = ori.getId();
             boolean sucesso = documentoService.deletarOrientacao(documentoSelecionado, id);
             if (sucesso) {
                 carregarOrientacoes();
@@ -348,24 +383,20 @@ public class MainGUI extends JFrame {
         if (pergunta.trim().isEmpty()) return;
 
         areaChat.append("Você: " + pergunta + "\n");
-        campoPergunta.setText(""); // limpa o campo
+        campoPergunta.setText("");
 
-        // Colocando um aviso visual antes da requisição
         areaChat.append("⏳ Pensando...\n");
 
-        // Thread separada para não travar a UI
         new Thread(() -> {
             try {
                 ChatResponse resposta = chatPdfService.enviarPergunta(documentoSelecionado, pergunta);
 
                 SwingUtilities.invokeLater(() -> {
-                    // Substitui o "⏳ Pensando..." pela resposta real (lógica simples adicionando o texto abaixo)
                     if (resposta != null && resposta.getContent() != null) {
                         areaChat.append("🤖 IA: " + resposta.getContent() + "\n\n");
                     } else {
                         areaChat.append("❌ Erro na resposta da API.\n\n");
                     }
-                    // Move o scroll para o final
                     areaChat.setCaretPosition(areaChat.getDocument().getLength());
                 });
             } catch (Exception e) {
@@ -382,25 +413,25 @@ public class MainGUI extends JFrame {
             setLineWrap(true);
             setWrapStyleWord(true);
             setOpaque(true);
-            // Cria um espaçamento interno e uma linha cinza para separar os itens
+
+            // Alterei a cor da linha divisória para ficar harmoniosa com o Dark Mode
+            Color corDaLinha = new Color(80, 80, 80); // Cinza mais escurinho
+
             setBorder(BorderFactory.createCompoundBorder(
-                    BorderFactory.createMatteBorder(0, 0, 1, 0, Color.LIGHT_GRAY),
+                    BorderFactory.createMatteBorder(0, 0, 1, 0, corDaLinha),
                     BorderFactory.createEmptyBorder(10, 10, 10, 10)
             ));
         }
 
         @Override
         public Component getListCellRendererComponent(JList<? extends Orientacao> list, Orientacao value, int index, boolean isSelected, boolean cellHasFocus) {
-            // Formata como o texto vai aparecer na lista (ajuste os getters se necessário)
             setText("📌 [ID: " + value.getId() + "] " + value.getTitle() + "\n" + value.getContent());
 
-            // Calcula a largura correta para a quebra de linha funcionar dinamicamente
             int width = list.getWidth();
             if (width > 0) {
                 setSize(new Dimension(width, Short.MAX_VALUE));
             }
 
-            // Altera a cor se o usuário clicar/selecionar o item
             if (isSelected) {
                 setBackground(list.getSelectionBackground());
                 setForeground(list.getSelectionForeground());
