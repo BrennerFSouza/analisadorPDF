@@ -1,8 +1,8 @@
-import modelo.ChatResponse;
-import modelo.Documento;
-import modelo.Orientacao;
-import servico.ChatPdfService;
-import servico.DocumentoService;
+import main.java.modelo.ChatResponse;
+import main.java.modelo.Documento;
+import main.java.modelo.Orientacao;
+import main.java.servico.ChatPdfService;
+import main.java.servico.DocumentoService;
 
 import static java.lang.IO.readln;
 

@@ -49,7 +49,7 @@ javac -cp "lib/gson-2.10.1.jar" -d bin src/*.java src/*/*.java
 # Execute (SEUS dados!)
 java -Dchatpdf.api.key=sec_u455RyzsK8cg06gJ5u6Bg21r9D3YdMM0 ^
      -Dchatpdf.source.id=SEU_SOURCEID ^
-     -cp "bin:lib/*" analisadorpdf2.cli.Chatpdf.Main
+     -cp "bin:lib/*" analisadorpdf2.main.java.cli.Chatpdf.Main
 📱 Exemplo Saída
 text
 🔍 Iniciando Analisador PDF com ChatPDF...
@@ -75,15 +75,15 @@ analisadorPDF/
 ├── lib/
 │   └── gson-2.10.1.jar      # 📦 JSON
 └── src/
-├── cli/
+├── main.java.cli/
 │   └── Chatpdf.Main.java        # 🚪 Entry point
-├── modelo/              # 📦 Dados
+├── main.java.modelo/              # 📦 Dados
 │   ├── Message.java
 │   ├── ChatRequest.java
 │   └── ChatResponse.java
-├── servico/             # ⚙️ Lógica
+├── main.java.servico/             # ⚙️ Lógica
 │   └── ChatPdfService.java
-└── configuracao/        # 🔧 Config
+└── main.java.configuracao/        # 🔧 Config
 └── ApiConfig.java
 🎓 Conceitos Aprendidos
 java.net.http.HttpClient (Java 11+)

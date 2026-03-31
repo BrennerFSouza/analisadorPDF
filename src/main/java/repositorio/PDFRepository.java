@@ -1,7 +1,7 @@
-package repositorio;
+package main.java.repositorio;
 
-import modelo.Documento;
-import modelo.Orientacao;
+import main.java.modelo.Documento;
+import main.java.modelo.Orientacao;
 import org.openpdf.text.Document;
 import org.openpdf.text.Element;
 import org.openpdf.text.Font;

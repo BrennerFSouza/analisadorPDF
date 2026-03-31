@@ -1,4 +1,4 @@
-package modelo;
+package main.java.modelo;
 
 public class Message {
     private String role;

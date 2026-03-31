@@ -1,8 +1,8 @@
-package repositorio;
+package main.java.repositorio;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import modelo.Documento;
+import main.java.modelo.Documento;
 
 import java.io.FileWriter;
 import java.io.IOException;

@@ -1,7 +1,7 @@
-package servico;
+package main.java.servico;
 
-import modelo.*;
-import repositorio.ChatPdfRepository;
+import main.java.modelo.*;
+import main.java.repositorio.ChatPdfRepository;
 
 public class ChatPdfService {
     private PDFService pdfService = new PDFService();

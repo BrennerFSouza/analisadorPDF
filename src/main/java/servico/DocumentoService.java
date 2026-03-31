@@ -1,12 +1,10 @@
-package servico;
+package main.java.servico;
 
-import modelo.Documento;
-import modelo.Orientacao;
-import repositorio.ChatPdfRepository;
-import repositorio.DocumentoRepository;
+import main.java.modelo.Documento;
+import main.java.modelo.Orientacao;
+import main.java.repositorio.DocumentoRepository;
 
 import java.io.File;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
