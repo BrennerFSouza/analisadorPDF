@@ -1,10 +1,10 @@
-package main.java.repositorio;
+package repositorio;
 
 import com.google.gson.Gson;
-import main.java.configuracao.ApiConfig;
-import main.java.modelo.ChatRequest;
-import main.java.modelo.ChatResponse;
-import main.java.modelo.Documento;
+import configuracao.ApiConfig;
+import modelo.ChatRequest;
+import modelo.ChatResponse;
+import modelo.Documento;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
 import org.apache.hc.client5.http.entity.mime.MultipartEntityBuilder;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;

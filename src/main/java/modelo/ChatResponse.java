@@ -1,4 +1,4 @@
-package main.java.modelo;
+package modelo;
 
 public class ChatResponse {
     private String content;

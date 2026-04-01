@@ -1,8 +1,8 @@
-package main.java.servico;
+package servico;
 
-import main.java.modelo.Documento;
-import main.java.modelo.Orientacao;
-import main.java.repositorio.DocumentoRepository;
+import modelo.Documento;
+import modelo.Orientacao;
+import repositorio.DocumentoRepository;
 
 import java.io.File;
 import java.util.ArrayList;

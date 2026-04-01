@@ -1,10 +1,10 @@
-package main.java.cli;
+package cli;
 
-import main.java.modelo.ChatResponse;
-import main.java.modelo.Documento;
-import main.java.modelo.Orientacao;
-import main.java.servico.ChatPdfService;
-import main.java.servico.DocumentoService;
+import modelo.ChatResponse;
+import modelo.Documento;
+import modelo.Orientacao;
+import servico.ChatPdfService;
+import servico.DocumentoService;
 
 import javax.swing.*;
 import java.awt.*;

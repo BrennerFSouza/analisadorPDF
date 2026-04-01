@@ -1,4 +1,4 @@
-package main.java.modelo;
+package modelo;
 
 import java.util.Collections;
 import java.util.Date;

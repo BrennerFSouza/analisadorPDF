@@ -1,4 +1,4 @@
-package main.java.configuracao;
+package configuracao;
 
 public class ApiConfig {
     public static final String URL_BASE = "https://api.chatpdf.com/v1";

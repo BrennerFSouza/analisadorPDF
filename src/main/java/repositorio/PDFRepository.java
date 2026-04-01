@@ -1,13 +1,14 @@
-package main.java.repositorio;
+package repositorio;
 
-import main.java.modelo.Documento;
-import main.java.modelo.Orientacao;
-import org.openpdf.text.Document;
-import org.openpdf.text.Element;
-import org.openpdf.text.Font;
-import org.openpdf.text.Paragraph;
-import org.openpdf.text.pdf.BaseFont;
-import org.openpdf.text.pdf.PdfWriter;
+import com.lowagie.text.Document;
+import com.lowagie.text.Element;
+import com.lowagie.text.Font;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.pdf.BaseFont;
+import com.lowagie.text.pdf.PdfWriter;
+import modelo.Documento;
+import modelo.Orientacao;
+
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;

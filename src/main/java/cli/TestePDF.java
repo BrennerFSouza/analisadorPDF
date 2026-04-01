@@ -1,8 +1,8 @@
-package main.java.cli;
+package cli;
 
-import main.java.modelo.Documento;
-import main.java.servico.ChatPdfService;
-import main.java.servico.DocumentoService;
+import modelo.Documento;
+import servico.ChatPdfService;
+import servico.DocumentoService;
 
 public class TestePDF {
 

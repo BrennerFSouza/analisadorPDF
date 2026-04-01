@@ -1,7 +1,7 @@
-package main.java.servico;
+package servico;
 
-import main.java.modelo.Documento;
-import main.java.repositorio.PDFRepository;
+import modelo.Documento;
+import repositorio.PDFRepository;
 
 
 public class PDFService {
