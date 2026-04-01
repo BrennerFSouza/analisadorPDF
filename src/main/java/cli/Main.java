@@ -6,8 +6,12 @@ import modelo.Orientacao;
 import servico.ChatPdfService;
 import servico.DocumentoService;
 
+import java.util.List;
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
         //LISTAR DOCUMENTOS
         DocumentoService documentoservice = new DocumentoService();
         ChatPdfService chatPdfService = new ChatPdfService();
@@ -24,8 +28,8 @@ public class Main {
             System.out.println("1 - Listar Documentos");
             System.out.println("2 - Criar Novo Documento");
             System.out.println("3 - Selecionar Documento");
-
-            seletorNumerico = Integer.parseInt(readln("Selecione:\n"));
+            System.out.println("Selecione:\n");
+            seletorNumerico = Integer.parseInt(scanner.nextLine());
             String[] listaDocumentos = documentoservice.listarDocumentos();
 
             switch (seletorNumerico) {
@@ -44,12 +48,13 @@ public class Main {
 
                     break;
                 case 2:
-
-                    String nomeNovoDocumento = readln("Digite o nome para o novo Documento");
+                    System.out.println("Digite o nome para o novo Documento");
+                    String nomeNovoDocumento = scanner.nextLine();
                     documentoservice.criarDocumento(nomeNovoDocumento);
                     break;
                 case 3:
-                    seletorDocumento = Integer.parseInt(readln("Qual documento deseja selecionar?\n"));
+                    System.out.println("Qual documento deseja selecionar?\n");
+                    seletorDocumento = Integer.parseInt(scanner.nextLine());
                     Documento documento = documentoservice.buscarDocumento(listaDocumentos[seletorDocumento - 1]);
                     System.out.println("Documento Selecionado");
                     System.out.println(documento);
@@ -65,8 +70,8 @@ public class Main {
                         System.out.println("5 - Deletar documento");
                         System.out.println("6 - Perguntar para IA");
                         System.out.println("7 - Atualizar Id documento");
-
-                        seletorNumericoOrientacao = Integer.parseInt(readln("Selecione uma opção"));
+                        System.out.println("Selecione uma opção");
+                        seletorNumericoOrientacao = Integer.parseInt(scanner.nextLine());
 
                         String titulo = null;
                         String conteudo = null;
@@ -92,8 +97,10 @@ public class Main {
                                 break;
 
                             case 2:
-                                titulo = readln("Digite o titulo da orientação:\n");
-                                conteudo = readln("Digite a descrição:\n");
+                                System.out.println("Digite o titulo da orientação:\n");
+                                titulo = scanner.nextLine();
+                                System.out.println("Digite a descrição:\n");
+                                conteudo = scanner.nextLine();
 
                                 documento = documentoservice.incluirOrientacao(documento, titulo, conteudo);
                                 System.out.println("Documento atualizado...");
@@ -101,9 +108,12 @@ public class Main {
                                 break;
 
                             case 3:
-                                id = Long.parseLong(readln("Qual item deseja editar?\n"));
-                                titulo = readln("Digite o titulo da orientação:\n");
-                                conteudo = readln("Digite a descrição:\n");
+                                System.out.println("Qual item deseja editar?\n");
+                                id = Long.parseLong(scanner.nextLine());
+                                System.out.println("Digite o titulo da orientação:\n");
+                                titulo = scanner.nextLine();
+                                System.out.println("Digite a descrição:\n");
+                                conteudo = scanner.nextLine();
 
                                 documento = documentoservice.editarOrientacao(documento, id, titulo, conteudo);
                                 System.out.println("Documento atualizado...");
@@ -113,7 +123,8 @@ public class Main {
                                 break;
 
                             case 4:
-                                id = Long.parseLong(readln("Qual item deseja editar?\n"));
+                                System.out.println("Qual item deseja editar?\n");
+                                id = Long.parseLong(scanner.nextLine());
 
                                 if (documentoservice.deletarOrientacao(documento, id)) {
                                     System.out.println("Item removido com sucesso...");
@@ -129,8 +140,8 @@ public class Main {
                                 break;
 
                             case 6:
-
-                                String textoPergunta = IO.readln("Digite sua pergunta\n");
+                                System.out.println("Digite sua pergunta\n");
+                                String textoPergunta = scanner.nextLine();
 
                                 ChatResponse resposta = chatPdfService.enviarPergunta(documento, textoPergunta);
                                 System.out.print("⏳ Enviando pergunta para ChatPDF");
@@ -144,7 +155,8 @@ public class Main {
                                 break;
 
                             case 7:
-                                String sorceId = readln("Digite o id do sorce:\n");
+                                System.out.println("Digite o id do sorce:\n");
+                                String sorceId = scanner.nextLine();
                                 documentoservice.atualizarSorceID(documento, sorceId);
                                 break;
                             default:
@@ -155,7 +167,6 @@ public class Main {
 
                     }
 
-
                     break;
 
                 default:
@@ -164,9 +175,6 @@ public class Main {
             }
 
         }
-
-
-
 
     }
 }
